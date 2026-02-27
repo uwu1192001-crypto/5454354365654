@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Crypto Clicker</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white; font-family: Arial, sans-serif;
+            min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; padding: 20px; user-select: none;
+        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .score-container {
+            background: rgba(255,255,255,0.1); padding: 15px 30px;
+            border-radius: 15px; margin: 10px 0;
+        }
+        #score { font-size: 36px; font-weight: bold; color: #ffd700; }
+        .stats { display: flex; gap: 15px; justify-content: center; margin: 10px 0; color: #aaa; }
+        #clicker-btn {
+            width: 200px; height: 200px; border-radius: 50%;
+            background: radial-gradient(circle, #ffd700, #ff8c00);
+            border: 6px solid rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.1s;
+        }
+        #clicker-btn:active { transform: scale(0.92); }
+        .shop { width: 100%; max-width: 400px; margin-top: 20px; }
+        .shop-title { text-align: center; font-size: 22px; margin-bottom: 15px; color: #ffd700; }
+        .upgrade-item {
+            background: rgba(255,255,255,0.08); border-radius: 12px;
+            padding: 15px; margin-bottom: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .upgrade-info { flex: 1; }
+        .upgrade-name { font-weight: bold; font-size: 16px; margin-bottom: 5px; }
+        .upgrade-desc { font-size: 12px; color: #888; }
+        .upgrade-btn {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border: none; padding: 10px 20px; border-radius: 8px;
+            color: #000; font-weight: bold; cursor: pointer; min-width: 100px;
+        }
+        .upgrade-btn:disabled { background: #444; color: #888; cursor: not-allowed; }
+        .upgrade-btn.purchased { background: #4cd964; color: white; }
+        .skin-blue { background: radial-gradient(circle, #00d4ff, #0066cc) !important; }
+        .skin-purple { background: radial-gradient(circle, #ff00ff, #6600cc) !important; }
+        .skin-green { background: radial-gradient(circle, #00ff88, #009944) !important; }
+        .skin-red { background: radial-gradient(circle, #ff4444, #990000) !important; }
+        .notification {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(76,217,100,0.9); color: white;
+            padding: 10px 20px; border-radius: 8px; opacity: 0;
+            transition: opacity 0.3s; z-index: 1000;
+        }
+        .notification.show { opacity: 1; }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💰 Crypto Clicker</h1>
+        <div class="score-container">
+            <div>Баланс</div>
+            <div id="score">0</div>
+        </div>
+        <div class="stats">
+            <span>⚡ Сила: <b id="power-display">1</b></span>
+            <span>🖱️ Кликов: <b id="clicks-display">0</b></span>
+        </div>
+    </div>
+    <div id="clicker-btn" onclick="handleClick(event)">TAP!</div>
+    <div class="shop">
+        <div class="shop-title">🛒 Магазин улучшений</div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">💪 Сила клика +1</div>
+                <div class="upgrade-desc">Увеличивает доход за клик</div>
+            </div>
+            <button class="upgrade-btn" id="btn-power" onclick="buyUpgrade('power')">
+                <span id="cost-power">10</span> 💰
+            </button>
+        </div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">⚡ Авто-кликер</div>
+                <div class="upgrade-desc">+1 монета в секунду</div>
+            </div>
+            <button class="upgrade-btn" id="btn-auto" onclick="buyUpgrade('auto')">
+                <span id="cost-auto">50</span> 💰
+            </button>
+        </div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">🎨 Синий скин</div>
+                <div class="upgrade-desc">Изменяет цвет кликера</div>
+            </div>
+            <button class="upgrade-btn" id="btn-skin-blue" onclick="buyUpgrade('skin_blue')">
+                <span id="cost-skin-blue">100</span> 💰
+            </button>
+        </div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">🎨 Фиолетовый скин</div>
+                <div class="upgrade-desc">Премиум внешний вид</div>
+            </div>
+            <button class="upgrade-btn" id="btn-skin-purple" onclick="buyUpgrade('skin_purple')">
+                <span id="cost-skin-purple">250</span> 💰
+            </button>
+        </div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">🎨 Зелёный скин</div>
+                <div class="upgrade-desc">Редкий цвет</div>
+            </div>
+            <button class="upgrade-btn" id="btn-skin-green" onclick="buyUpgrade('skin_green')">
+                <span id="cost-skin-green">500</span> 💰
+            </button>
+        </div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">🎨 Красный скин</div>
+                <div class="upgrade-desc">Легендарный цвет</div>
+            </div>
+            <button class="upgrade-btn" id="btn-skin-red" onclick="buyUpgrade('skin_red')">
+                <span id="cost-skin-red">1000</span> 💰
+            </button>
+        </div>
+        
+        <div class="upgrade-item">
+            <div class="upgrade-info">
+                <div class="upgrade-name">🔄 Сброс прогресса</div>
+                <div class="upgrade-desc">Начать заново</div>
+            </div>
+            <button class="upgrade-btn" style="background: linear-gradient(135deg, #ff4444, #cc0000);" onclick="resetGame()">
+                Сбросить
+            </button>
+        </div>
+    </div>
+    <div class="notification" id="notification"></div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); tg.ready();
+        document.body.style.backgroundColor = tg.themeParams.bg_color || '#1a1a2e';
+
+        let game = {
+            score: 0, clickPower: 1, autoClicker: 0, totalClicks: 0, level: 1,
+            currentSkin: 'default', purchasedSkins: ['default'],
+            costs: { power: 10, auto: 50, skin_blue: 100, skin_purple: 250, skin_green: 500, skin_red: 1000 }
+        };
+
+        function loadGame() {
+            const saved = localStorage.getItem('telegramClickerSave');
+            if (saved) {
+                game = JSON.parse(saved);
+            }
+            applySkin(game.currentSkin);
+            updateUI();
+        }
+
+        function saveGame() {
+            localStorage.setItem('telegramClickerSave', JSON.stringify(game));
+        }
+
+        function updateUI() {
+            document.getElementById('score').innerText = Math.floor(game.score).toLocaleString();
+            document.getElementById('power-display').innerText = game.clickPower;
+            document.getElementById('clicks-display').innerText = game.totalClicks;
+
+            ['power','auto','skin_blue','skin_purple','skin_green','skin_red'].forEach(type => {
+                const btn = document.getElementById('btn-'+type);
+                const cost = document.getElementById('cost-'+type);
+                if (btn && cost) {
+                    cost.innerText = game.costs[type];
+                    if (type.startsWith('skin_')) {
+                        const skinName = type.replace('skin_', '');
+                        if (game.purchasedSkins.includes(skinName)) {
+                            btn.classList.add('purchased');
+                            btn.innerText = 'Куплено';
+                            btn.disabled = true;
+                            return;
+                        }
+                    }
+                    btn.disabled = game.score < game.costs[type];
+                }
+            });
+            saveGame();
+        }
+
+        function handleClick(e) {
+            game.score += game.clickPower;
+            game.totalClicks++;
+
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+
+            const btn = document.getElementById('clicker-btn');
+            btn.style.transform = 'scale(0.92)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 100);
+
+            const effect = document.createElement('div');
+            effect.innerText = '+' + game.clickPower;
+            effect.style.cssText = 'position:absolute;color:#fff;font-size:24px;font-weight:bold;animation:floatUp 1s forwards;pointer-events:none;';
+            effect.style.left = (e.clientX-20)+'px';
+            effect.style.top = (e.clientY-20)+'px';
+            document.body.appendChild(effect);
+            setTimeout(() => effect.remove(), 1000);
+
+            updateUI();
+        }
+
+        function buyUpgrade(type) {
+            if (game.score >= game.costs[type]) {
+                game.score -= game.costs[type];
+
+                switch(type) {
+                    case 'power':
+                        game.clickPower += 1;
+                        game.costs.power = Math.floor(game.costs.power * 1.5);
+                        showNotification('💪 Сила клика увеличена!');
+                        break;
+                    case 'auto':
+                        game.autoClicker += 1;
+                        game.costs.auto = Math.floor(game.costs.auto * 1.3);
+                        showNotification('⚡ Авто-кликер активирован!');
+                        break;
+                    case 'skin_blue': case 'skin_purple': case 'skin_green': case 'skin_red':
+                        const skinName = type.replace('skin_', '');
+                        game.purchasedSkins.push(skinName);
+                        game.currentSkin = skinName;
+                        applySkin(skinName);
+                        showNotification('🎨 Новый скин применён!');
+                        break;
+                }
+
+                if (tg.HapticFeedback) {
+                    tg.HapticFeedback.notificationOccurred('success');
+                }
+                updateUI();
+            }
+        }
+
+        function applySkin(skin) {
+            const btn = document.getElementById('clicker-btn');
+            btn.className = '';
+            if (skin === 'default') { btn.classList.add('skin-default'); btn.innerText = 'TAP!'; }
+            else if (skin === 'blue') { btn.classList.add('skin-blue'); btn.innerText = 'COOL!'; }
+            else if (skin === 'purple') { btn.classList.add('skin-purple'); btn.innerText = 'EPIC!'; }
+            else if (skin === 'green') { btn.classList.add('skin-green'); btn.innerText = 'RARE!'; }
+            else if (skin === 'red') { btn.classList.add('skin-red'); btn.innerText = 'LEGEND!'; }
+        }
+
+        function showNotification(message) {
+            const n = document.getElementById('notification');
+            n.innerText = message;
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 2000);
+        }
+
+        function resetGame() {
+            if (confirm('Вы уверены? Весь прогресс будет потерян!')) {
+                localStorage.removeItem('telegramClickerSave');
+                location.reload();
+            }
+        }
+
+        // Авто-кликер
+        setInterval(() => {
+            if (game.autoClicker > 0) {
+                game.score += game.autoClicker;
+                updateUI();
+            }
+        }, 1000);
+
+        // Авто-сохранение
+        setInterval(saveGame, 10000);
+
+        loadGame();
+    </script>
+</body>
+</html>
