@@ -16,7 +16,6 @@
             overflow-x: hidden;
         }
         
-        /* Фиолетовый фон */
         .bg-animation {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
@@ -46,7 +45,6 @@
             50% { transform: translate(40px, -40px) scale(1.1); }
         }
         
-        /* Контейнер для ПК версии */
         .main-container {
             width: 100%;
             max-width: 1200px;
@@ -123,7 +121,6 @@
             min-width: 100px;
         }
         
-        /* КЛИКЕР */
         .clicker-container { 
             margin: 30px 0; position: relative; 
             display: flex; flex-direction: column; align-items: center;
@@ -155,7 +152,6 @@
             background: rgba(165,94,234,0.2);
         }
         
-        /* ЭФФЕКТЫ (УМЕНЬШЕНО) */
         .click-effect {
             position: absolute; font-size: 24px; font-weight: bold;
             color: #d980fa; pointer-events: none;
@@ -168,7 +164,6 @@
             100% { opacity: 0; transform: translateY(-100px); }
         }
         
-        /* КОМБО */
         .combo-container {
             position: fixed; bottom: 20px; left: 50%;
             transform: translateX(-50%);
@@ -186,7 +181,6 @@
         
         .combo-box.show { opacity: 1; transform: scale(1); }
         
-        /* ПРОГРЕСС (ИСПРАВЛЕНО) */
         .evolution-bar {
             width: 100%; max-width: 400px; margin: 20px 0;
         }
@@ -209,7 +203,6 @@
             box-shadow: 0 0 15px rgba(165,94,234,0.6);
         }
         
-        /* МАГАЗИН И ТАБЫ */
         .tabs {
             display: flex; gap: 10px; margin-bottom: 15px;
             justify-content: center; flex-wrap: wrap;
@@ -268,23 +261,22 @@
         
         /* КАЗИНО */
         .casino-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            max-width: 500px;
+            margin: 0 auto;
         }
         
         .casino-game {
             background: rgba(165,94,234,0.1);
             border: 2px solid rgba(165,94,234,0.3);
             border-radius: 20px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
+            margin-bottom: 20px;
         }
         
         .casino-title {
-            font-size: 18px; font-weight: bold;
-            color: #d980fa; margin-bottom: 15px;
+            font-size: 20px; font-weight: bold;
+            color: #d980fa; margin-bottom: 20px;
         }
         
         .bet-input {
@@ -292,37 +284,77 @@
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(165,94,234,0.3);
             color: white;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
             text-align: center;
         }
         
+        .casino-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
         .casino-btn {
-            width: 100%;
-            padding: 12px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
-            margin-bottom: 8px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
         .casino-btn:active { transform: scale(0.95); }
-        .btn-red { background: linear-gradient(135deg, #ff4444, #cc0000); color: white; }
-        .btn-black { background: linear-gradient(135deg, #333, #000); color: white; }
-        .btn-roll { background: linear-gradient(135deg, #a55eea, #8854d0); color: white; }
+        .btn-red { 
+            background: linear-gradient(135deg, #ff4444, #cc0000); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(255,68,68,0.4);
+        }
+        .btn-black { 
+            background: linear-gradient(135deg, #333, #000); 
+            color: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
         
-        .casino-result {
-            margin-top: 10px;
-            font-size: 14px;
-            min-height: 20px;
+        .casino-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(165,94,234,0.2);
+        }
+        
+        .casino-stat {
+            text-align: center;
+        }
+        
+        .casino-stat-value {
+            font-size: 18px;
+            font-weight: bold;
             color: #d980fa;
         }
         
-        /* КОЛЛЕКЦИЯ */
+        .casino-stat-label {
+            font-size: 11px;
+            color: #888;
+        }
+        
+        .casino-result {
+            margin-top: 15px;
+            font-size: 16px;
+            min-height: 24px;
+            font-weight: bold;
+        }
+        
+        .casino-result.win { color: #4cd964; }
+        .casino-result.lose { color: #ff4444; }
+        
+        /* КОЛЛЕКЦИЯ И ДОСТИЖЕНИЯ */
         .collection-grid {
             display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 10px; padding: 15px;
@@ -336,11 +368,25 @@
             background: rgba(165,94,234,0.2);
             cursor: pointer; transition: all 0.3s ease;
             border: 2px solid transparent;
+            position: relative;
         }
         
         .collection-item:hover { transform: scale(1.1); }
         .collection-item.locked { filter: grayscale(100%); opacity: 0.3; cursor: not-allowed; }
         .collection-item.selected { border-color: #d980fa; box-shadow: 0 0 20px rgba(217,128,250,0.5); }
+        .collection-item.hidden { background: rgba(165,94,234,0.05); }
+        
+        .collection-item .tooltip {
+            position: absolute; bottom: -40px; left: 50%;
+            transform: translateX(-50%); font-size: 11px;
+            background: rgba(0,0,0,0.95); padding: 6px 12px;
+            border-radius: 8px; white-space: nowrap;
+            opacity: 0; transition: opacity 0.3s;
+            pointer-events: none; z-index: 100;
+            max-width: 200px;
+        }
+        
+        .collection-item:hover .tooltip { opacity: 1; }
         
         /* УВЕДОМЛЕНИЯ */
         .notification {
@@ -369,6 +415,52 @@
             0% { transform: translateY(-50px) rotate(0deg); opacity: 0.6; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
+        
+        .achievement-category {
+            background: rgba(165,94,234,0.08);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(165,94,234,0.15);
+        }
+        
+        .category-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #d980fa;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .achievement-progress {
+            text-align: center;
+            padding: 15px;
+            background: rgba(165,94,234,0.1);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-text {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar-small {
+            height: 10px;
+            background: rgba(165,94,234,0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-small .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #a55eea, #d980fa);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -392,6 +484,7 @@
             <div class="stat-box">⚡ Сила: <b id="power-display">1</b></div>
             <div class="stat-box">🖱️ Клики: <b id="clicks-display">0</b></div>
             <div class="stat-box">💎 Ур: <b id="level-display">1</b></div>
+            <div class="stat-box">🏆 Ач: <b id="achievements-display">0/0</b></div>
         </div>
     </div>
 
@@ -472,21 +565,29 @@
                     <div class="shop-title">🎰 Казино</div>
                     
                     <div class="casino-container">
-                        <!-- Красное/Чёрное -->
                         <div class="casino-game">
                             <div class="casino-title">🔴 Красное / ⚫ Чёрное</div>
-                            <input type="number" id="bet-rb" class="bet-input" placeholder="Ставка" value="10">
-                            <button class="casino-btn btn-red" onclick="playRedBlack('red')">Красное (x2)</button>
-                            <button class="casino-btn btn-black" onclick="playRedBlack('black')">Чёрное (x2)</button>
+                            <input type="number" id="bet-rb" class="bet-input" placeholder="Ставка" value="10" min="1">
+                            <div class="casino-buttons">
+                                <button class="casino-btn btn-red" onclick="playRedBlack('red')">🔴 Красное (x2)</button>
+                                <button class="casino-btn btn-black" onclick="playRedBlack('black')">⚫ Чёрное (x2)</button>
+                            </div>
                             <div class="casino-result" id="result-rb"></div>
-                        </div>
-                        
-                        <!-- 21 / Lucky 7 -->
-                        <div class="casino-game">
-                            <div class="casino-title">🎲 Lucky 7</div>
-                            <input type="number" id="bet-7" class="bet-input" placeholder="Ставка" value="10">
-                            <button class="casino-btn btn-roll" onclick="playLucky7()">Бросить (x5)</button>
-                            <div class="casino-result" id="result-7"></div>
+                            
+                            <div class="casino-stats">
+                                <div class="casino-stat">
+                                    <div class="casino-stat-value" id="casino-wins">0</div>
+                                    <div class="casino-stat-label">Победы</div>
+                                </div>
+                                <div class="casino-stat">
+                                    <div class="casino-stat-value" id="casino-losses">0</div>
+                                    <div class="casino-stat-label">Поражения</div>
+                                </div>
+                                <div class="casino-stat">
+                                    <div class="casino-stat-value" id="casino-total">0</div>
+                                    <div class="casino-stat-label">Игр</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -506,7 +607,38 @@
             <div class="tab-content" id="tab-achievements">
                 <div class="collection-section">
                     <div class="shop-title">🏆 Достижения</div>
-                    <div class="collection-grid" id="achievements-grid"></div>
+                    
+                    <div class="achievement-progress">
+                        <div class="progress-text">Общий прогресс: <b id="total-achievements">0/0</b></div>
+                        <div class="progress-bar-small">
+                            <div class="fill" id="achievements-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-category">
+                        <div class="category-title">🖱️ Клики</div>
+                        <div class="collection-grid" id="achievements-clicks"></div>
+                    </div>
+                    
+                    <div class="achievement-category">
+                        <div class="category-title">💰 Монеты</div>
+                        <div class="collection-grid" id="achievements-score"></div>
+                    </div>
+                    
+                    <div class="achievement-category">
+                        <div class="category-title">🎰 Казино</div>
+                        <div class="collection-grid" id="achievements-casino"></div>
+                    </div>
+                    
+                    <div class="achievement-category">
+                        <div class="category-title">📱 Telegram</div>
+                        <div class="collection-grid" id="achievements-tg"></div>
+                    </div>
+                    
+                    <div class="achievement-category">
+                        <div class="category-title">❓ Скрытые</div>
+                        <div class="collection-grid" id="achievements-hidden"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -534,11 +666,47 @@
             { clicks: 500000, emoji: '🌟', name: 'Легенда' }
         ];
 
+        // 🏆 ДОСТИЖЕНИЯ (30 штук)
         const achievements = [
-            { id: 'clicks_100', name: 'Старт', emoji: '🎯', condition: (g) => g.totalClicks >= 100 },
-            { id: 'clicks_1000', name: '1000', emoji: '🔥', condition: (g) => g.totalClicks >= 1000 },
-            { id: 'score_1000', name: 'Богач', emoji: '💰', condition: (g) => g.score >= 1000 },
-            { id: 'score_10000', name: 'Магнат', emoji: '💎', condition: (g) => g.score >= 10000 }
+            // КЛИКИ
+            { id: 'clicks_100', name: 'Первые шаги', desc: '100 кликов', emoji: '🎯', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 100 },
+            { id: 'clicks_500', name: 'Разгон', desc: '500 кликов', emoji: '⚡', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 500 },
+            { id: 'clicks_1000', name: 'Тысячник', desc: '1000 кликов', emoji: '🔥', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 1000 },
+            { id: 'clicks_10000', name: 'Фанатик', desc: '10000 кликов', emoji: '💪', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 10000 },
+            { id: 'clicks_50000', name: 'Легенда', desc: '50000 кликов', emoji: '👑', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 50000 },
+            
+            // МОНЕТЫ
+            { id: 'score_1000', name: 'Богач', desc: '1000 монет', emoji: '💰', category: 'score', hidden: false, condition: (g) => g.score >= 1000 },
+            { id: 'score_5000', name: 'Состоятельный', desc: '5000 монет', emoji: '💵', category: 'score', hidden: false, condition: (g) => g.score >= 5000 },
+            { id: 'score_10000', name: 'Магнат', desc: '10000 монет', emoji: '💎', category: 'score', hidden: false, condition: (g) => g.score >= 10000 },
+            { id: 'score_50000', name: 'Олигарх', desc: '50000 монет', emoji: '🏦', category: 'score', hidden: false, condition: (g) => g.score >= 50000 },
+            { id: 'score_100000', name: 'Миллионер', desc: '100000 монет', emoji: '🤑', category: 'score', hidden: false, condition: (g) => g.score >= 100000 },
+            
+            // КАЗИНО
+            { id: 'casino_first', name: 'Первая игра', desc: 'Сыграть в казино 1 раз', emoji: '🎰', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 1 },
+            { id: 'casino_10', name: 'Игрок', desc: 'Сыграть 10 раз', emoji: '🎲', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 10 },
+            { id: 'casino_50', name: 'Азартный', desc: 'Сыграть 50 раз', emoji: '🃏', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 50 },
+            { id: 'casino_100', name: 'Казинозависимый', desc: 'Сыграть 100 раз', emoji: '♠️', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 100 },
+            { id: 'casino_wins_10', name: 'Везунчик', desc: '10 побед в казино', emoji: '🍀', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 10 },
+            { id: 'casino_wins_50', name: 'Фортуна', desc: '50 побед в казино', emoji: '🎯', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 50 },
+            { id: 'casino_bigwin', name: 'Крупный выигрыш', desc: 'Выиграть 5000+ за раз', emoji: '💸', category: 'casino', hidden: false, condition: (g) => g.casinoBigWin >= 1 },
+            { id: 'casino_streak_5', name: 'Серия удачи', desc: '5 побед подряд', emoji: '🔥', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 5 },
+            { id: 'casino_streak_10', name: 'Непобедимый', desc: '10 побед подряд', emoji: '👑', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 10 },
+            
+            // TELEGRAM
+            { id: 'tg_user', name: 'Пользователь TG', desc: 'Играть через Telegram', emoji: '📱', category: 'tg', hidden: false, condition: (g) => g.isTelegram === true },
+            { id: 'tg_share', name: 'Делюсь!', desc: 'Открыть игру 5 раз', emoji: '📤', category: 'tg', hidden: false, condition: (g) => g.openCount >= 5 },
+            { id: 'tg_daily', name: 'Ежедневный', desc: 'Играть 3 дня подряд', emoji: '📅', category: 'tg', hidden: false, condition: (g) => g.dailyStreak >= 3 },
+            { id: 'tg_weekly', name: 'Недельный', desc: 'Играть 7 дней подряд', emoji: '🗓️', category: 'tg', hidden: false, condition: (g) => g.dailyStreak >= 7 },
+            
+            // СКРЫТЫЕ
+            { id: 'hidden_bankrupt', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Банкрот', realDesc: 'Проиграть всё в казино', condition: (g) => g.casinoBankrupt >= 1 },
+            { id: 'hidden_rich', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Рокфеллер', realDesc: 'Иметь 1,000,000 монет', condition: (g) => g.score >= 1000000 },
+            { id: 'hidden_clicker', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Клик-машина', realDesc: '100,000 кликов', condition: (g) => g.totalClicks >= 100000 },
+            { id: 'hidden_patient', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Терпеливый', realDesc: 'Играть 1 час', condition: (g) => g.playTime >= 3600 },
+            { id: 'hidden_lucky', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Рождённый в рубашке', realDesc: '10 побед подряд в казино', condition: (g) => g.casinoStreak >= 10 },
+            { id: 'hidden_collector', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Коллекционер', realDesc: 'Открыть все эволюции', condition: (g) => g.unlockedEvolutions.length >= evolutions.length },
+            { id: 'hidden_perfect', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Идеальный', realDesc: 'Открыть все достижения', condition: (g) => g.achievements.length >= achievements.filter(a => !a.hidden).length }
         ];
 
         let game = {
@@ -553,21 +721,51 @@
             achievements: [],
             combo: 0,
             comboTimer: 0,
-            lastClickTime: 0
+            lastClickTime: 0,
+            casinoWins: 0,
+            casinoLosses: 0,
+            casinoTotal: 0,
+            casinoStreak: 0,
+            casinoMaxStreak: 0,
+            casinoBigWin: 0,
+            casinoBankrupt: 0,
+            isTelegram: true,
+            openCount: 0,
+            dailyStreak: 0,
+            lastPlayDate: null,
+            playTime: 0,
+            startTime: Date.now()
         };
 
         function loadGame() {
             const saved = localStorage.getItem('purpleClickerSave');
             if (saved) {
-                game = { ...game, ...JSON.parse(saved) };
+                const data = JSON.parse(saved);
+                game = { ...game, ...data };
+                game.startTime = Date.now() - (game.playTime * 1000);
             }
+            
+            // Проверка ежедневной серии
+            const today = new Date().toDateString();
+            if (game.lastPlayDate !== today) {
+                if (game.lastPlayDate === new Date(Date.now() - 86400000).toDateString()) {
+                    game.dailyStreak++;
+                } else if (game.lastPlayDate !== today) {
+                    game.dailyStreak = 1;
+                }
+                game.lastPlayDate = today;
+            }
+            
+            game.openCount++;
             updateEvolution(true);
             renderCollection();
             renderAchievements();
+            updateCasinoStats();
             updateUI();
         }
 
         function saveGame() {
+            game.playTime = Math.floor((Date.now() - game.startTime) / 1000);
             localStorage.setItem('purpleClickerSave', JSON.stringify(game));
         }
 
@@ -576,8 +774,8 @@
             document.getElementById('power-display').innerText = game.clickPower;
             document.getElementById('clicks-display').innerText = game.totalClicks.toLocaleString();
             document.getElementById('level-display').innerText = Math.floor(game.totalClicks / 500) + 1;
+            document.getElementById('achievements-display').innerText = `${game.achievements.length}/${achievements.filter(a => !a.hidden).length}`;
 
-            // Обновление кнопок с проверкой цены
             ['power', 'auto', 'super', 'mega'].forEach(type => {
                 const btn = document.getElementById('btn-' + type);
                 const cost = document.getElementById('cost-' + type);
@@ -589,6 +787,7 @@
 
             updateEvolutionBar();
             updateCombo();
+            updateAchievementsProgress();
             saveGame();
         }
 
@@ -684,10 +883,10 @@
                 
                 if (type === 'power') {
                     game.clickPower += 1;
-                    game.costs.power = Math.floor(game.costs.power * 1.5); // Дорожает
+                    game.costs.power = Math.floor(game.costs.power * 1.5);
                 } else if (type === 'auto') {
                     game.autoClicker += 1;
-                    game.costs.auto = Math.floor(game.costs.auto * 1.4); // Дорожает
+                    game.costs.auto = Math.floor(game.costs.auto * 1.4);
                 } else if (type === 'super') {
                     game.clickPower += 5;
                     game.costs.super = Math.floor(game.costs.super * 1.5);
@@ -697,6 +896,7 @@
                 }
                 
                 showNotification('✅ Улучшено!');
+                checkAchievements();
                 updateUI();
             }
         }
@@ -709,66 +909,69 @@
             
             if (isNaN(bet) || bet <= 0) {
                 resultDiv.innerText = '❌ Неверная ставка';
+                resultDiv.className = 'casino-result lose';
                 return;
             }
             if (bet > game.score) {
                 resultDiv.innerText = '❌ Недостаточно монет';
+                resultDiv.className = 'casino-result lose';
                 return;
             }
             
+            const oldScore = game.score;
             game.score -= bet;
-            const win = Math.random() < 0.5; // 50% шанс
+            game.casinoTotal++;
+            
+            const win = Math.random() < 0.5;
             
             if (win) {
                 const winAmount = bet * 2;
                 game.score += winAmount;
+                game.casinoWins++;
+                game.casinoStreak++;
+                if (game.casinoStreak > game.casinoMaxStreak) game.casinoMaxStreak = game.casinoStreak;
+                if (winAmount >= 5000) game.casinoBigWin++;
+                
                 resultDiv.innerText = `✅ Победа! +${winAmount}`;
-                resultDiv.style.color = '#4cd964';
+                resultDiv.className = 'casino-result win';
                 createParticles('💰', 10);
             } else {
+                game.casinoLosses++;
+                game.casinoStreak = 0;
+                
                 resultDiv.innerText = '❌ Проигрыш';
-                resultDiv.style.color = '#ff4444';
+                resultDiv.className = 'casino-result lose';
+                
+                // Проверка на банкротство
+                if (game.score <= 0) {
+                    game.casinoBankrupt++;
+                }
             }
+            
+            updateCasinoStats();
+            checkAchievements();
             updateUI();
         }
 
-        function playLucky7() {
-            const betInput = document.getElementById('bet-7');
-            const bet = parseInt(betInput.value);
-            const resultDiv = document.getElementById('result-7');
-            
-            if (isNaN(bet) || bet <= 0) {
-                resultDiv.innerText = '❌ Неверная ставка';
-                return;
-            }
-            if (bet > game.score) {
-                resultDiv.innerText = '❌ Недостаточно монет';
-                return;
-            }
-            
-            game.score -= bet;
-            const roll = Math.floor(Math.random() * 10) + 1; // 1-10
-            
-            resultDiv.innerText = `Выпало: ${roll}`;
-            
-            if (roll === 7) {
-                const winAmount = bet * 5;
-                game.score += winAmount;
-                resultDiv.innerText += ` 🎉 ДЖЕКПОТ! +${winAmount}`;
-                resultDiv.style.color = '#d980fa';
-                createParticles('🎰', 20);
-            } else {
-                resultDiv.style.color = '#888';
-            }
-            updateUI();
+        function updateCasinoStats() {
+            document.getElementById('casino-wins').innerText = game.casinoWins;
+            document.getElementById('casino-losses').innerText = game.casinoLosses;
+            document.getElementById('casino-total').innerText = game.casinoTotal;
         }
 
         function checkAchievements() {
             achievements.forEach(ach => {
                 if (!game.achievements.includes(ach.id) && ach.condition(game)) {
                     game.achievements.push(ach.id);
-                    showNotification(`🏆 ${ach.name}!`);
+                    
+                    if (ach.hidden) {
+                        showNotification(`🔓 Скрытое достижение: ${ach.realName}!`);
+                    } else {
+                        showNotification(`🏆 ${ach.name}!`);
+                    }
+                    
                     createParticles(ach.emoji, 10);
+                    if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 }
             });
         }
@@ -792,15 +995,42 @@
         }
 
         function renderAchievements() {
-            const grid = document.getElementById('achievements-grid');
-            grid.innerHTML = '';
-            achievements.forEach(ach => {
-                const item = document.createElement('div');
-                const unlocked = game.achievements.includes(ach.id);
-                item.className = `collection-item ${unlocked ? 'selected' : 'locked'}`;
-                item.innerHTML = unlocked ? ach.emoji : '❓';
-                grid.appendChild(item);
+            const categories = ['clicks', 'score', 'casino', 'tg', 'hidden'];
+            
+            categories.forEach(cat => {
+                const grid = document.getElementById(`achievements-${cat}`);
+                if (!grid) return;
+                grid.innerHTML = '';
+                
+                const catAchievements = achievements.filter(a => a.category === cat);
+                catAchievements.forEach(ach => {
+                    const item = document.createElement('div');
+                    const unlocked = game.achievements.includes(ach.id);
+                    
+                    if (ach.hidden && !unlocked) {
+                        item.className = 'collection-item hidden';
+                        item.innerHTML = `❓<div class="tooltip">???</div>`;
+                    } else {
+                        item.className = `collection-item ${unlocked ? 'selected' : 'locked'}`;
+                        const name = ach.hidden ? ach.realName : ach.name;
+                        const desc = ach.hidden ? ach.realDesc : ach.desc;
+                        item.innerHTML = `${unlocked ? ach.emoji : '❓'}<div class="tooltip">${name}<br>${desc}</div>`;
+                    }
+                    
+                    grid.appendChild(item);
+                });
             });
+            
+            updateAchievementsProgress();
+        }
+
+        function updateAchievementsProgress() {
+            const total = achievements.filter(a => !a.hidden).length;
+            const unlocked = game.achievements.filter(a => !achievements.find(ach => ach.id === a && ach.hidden)).length;
+            const percentage = (unlocked / total) * 100;
+            
+            document.getElementById('total-achievements').innerText = `${unlocked}/${total}`;
+            document.getElementById('achievements-progress-bar').style.width = percentage + '%';
         }
 
         function createParticles(emoji, count) {
@@ -820,7 +1050,7 @@
             const n = document.getElementById('notification');
             n.innerText = msg;
             n.classList.add('show');
-            setTimeout(() => n.classList.remove('show'), 2000);
+            setTimeout(() => n.classList.remove('show'), 2500);
         }
 
         function switchTab(tab) {
@@ -829,6 +1059,7 @@
             document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById(`tab-${tab}`).classList.add('active');
             if (tab === 'collection') renderCollection();
+            if (tab === 'achievements') renderAchievements();
         }
 
         setInterval(() => {
