@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎮 Purple Clicker</title>
+    <title>🎮 TARGEM CLICKER</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: #0d0d14;
+            background: #0a0a0f;
             color: white; font-family: 'Segoe UI', Arial, sans-serif;
             min-height: 100vh; display: flex; flex-direction: column;
             align-items: center; padding: 20px; user-select: none;
             overflow-x: hidden;
         }
         
+        /* TARGEM стиль - тёмный с оранжевыми акцентами */
         .bg-animation {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
@@ -23,21 +24,29 @@
         
         .bg-orb {
             position: absolute; border-radius: 50%;
-            filter: blur(100px); opacity: 0.3;
+            filter: blur(100px); opacity: 0.25;
             animation: orbFloat 10s ease-in-out infinite;
         }
         
         .bg-orb-1 {
             width: 400px; height: 400px;
-            background: linear-gradient(135deg, #a55eea, #8854d0);
+            background: linear-gradient(135deg, #ff6600, #cc3300);
             top: -150px; left: -150px;
         }
         
         .bg-orb-2 {
             width: 500px; height: 500px;
-            background: linear-gradient(135deg, #48dbfb, #a55eea);
+            background: linear-gradient(135deg, #333333, #1a1a1a);
             bottom: -200px; right: -200px;
             animation-delay: -5s;
+        }
+        
+        .bg-orb-3 {
+            width: 300px; height: 300px;
+            background: linear-gradient(135deg, #ff8800, #ff4400);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -3s;
         }
         
         @keyframes orbFloat {
@@ -79,14 +88,24 @@
         }
         
         .game-title {
-            font-size: 42px; font-weight: 900;
-            background: linear-gradient(135deg, #a55eea, #d980fa, #a55eea);
+            font-size: 44px; font-weight: 900;
+            background: linear-gradient(135deg, #ff6600, #ff8800, #ffaa00, #ff6600);
             background-size: 300% 300%;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientShift 4s ease infinite;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255,102,0,0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .game-subtitle {
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 5px;
+            text-transform: uppercase;
             margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(165,94,234,0.5);
         }
         
         @keyframes gradientShift {
@@ -95,17 +114,19 @@
         }
         
         .score-container {
-            background: linear-gradient(135deg, rgba(165,94,234,0.3), rgba(136,84,208,0.3));
-            padding: 25px 50px; border-radius: 25px; margin: 10px 0;
+            background: linear-gradient(135deg, rgba(255,102,0,0.25), rgba(204,51,0,0.25));
+            padding: 25px 50px; border-radius: 5px; margin: 10px 0;
             backdrop-filter: blur(20px); 
-            border: 2px solid rgba(165,94,234,0.3);
-            box-shadow: 0 10px 40px rgba(165,94,234,0.3);
+            border: 2px solid rgba(255,102,0,0.4);
+            box-shadow: 0 10px 40px rgba(255,102,0,0.3), inset 0 0 20px rgba(255,102,0,0.1);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
         }
         
         #score { 
             font-size: 52px; font-weight: 900; 
-            color: #d980fa;
-            text-shadow: 0 0 25px rgba(217,128,250,0.6);
+            color: #ff8800;
+            text-shadow: 0 0 25px rgba(255,136,0,0.6), 0 0 50px rgba(255,102,0,0.4);
+            font-family: 'Courier New', monospace;
         }
         
         .stats { 
@@ -114,56 +135,84 @@
         }
         
         .stat-box {
-            background: linear-gradient(135deg, rgba(165,94,234,0.2), rgba(136,84,208,0.1));
-            padding: 12px 18px; border-radius: 15px; font-size: 13px;
-            border: 1px solid rgba(165,94,234,0.2);
+            background: linear-gradient(135deg, rgba(255,102,0,0.15), rgba(0,0,0,0.3));
+            padding: 12px 18px; border-radius: 3px; font-size: 13px;
+            border: 1px solid rgba(255,102,0,0.3);
             backdrop-filter: blur(10px);
             min-width: 100px;
+            clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
         }
         
+        .stat-box b { color: #ff8800; }
+        
+        /* КЛИКЕР - КНОПКА РАЗРАБОТКИ */
         .clicker-container { 
             margin: 30px 0; position: relative; 
             display: flex; flex-direction: column; align-items: center;
         }
         
         #clicker-btn {
-            width: 200px; height: 200px; border-radius: 50%;
-            background: linear-gradient(135deg, #a55eea, #8854d0);
-            border: 5px solid rgba(217,128,250,0.4);
+            width: 200px; height: 200px; border-radius: 10px;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border: 3px solid #ff6600;
             display: flex; align-items: center; justify-content: center;
             font-size: 80px; cursor: pointer;
-            box-shadow: 0 15px 50px rgba(165,94,234,0.4), inset 0 -10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 50px rgba(255,102,0,0.3), inset 0 0 30px rgba(255,102,0,0.1);
             transition: all 0.1s ease;
-            animation: float 4s ease-in-out infinite;
+            animation: pulse 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        #clicker-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,102,0,0.1), transparent);
+            animation: shine 3s linear infinite;
         }
         
-        #clicker-btn:active { transform: scale(0.90); }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 15px 50px rgba(255,102,0,0.3); }
+            50% { box-shadow: 0 15px 70px rgba(255,102,0,0.5); }
+        }
+        
+        #clicker-btn:active { 
+            transform: scale(0.92); 
+            box-shadow: 0 10px 30px rgba(255,102,0,0.4);
+        }
         
         .evolution-name {
-            margin-top: 15px; font-size: 18px; font-weight: 600;
-            color: #d980fa;
-            padding: 8px 20px;
-            border-radius: 20px;
-            background: rgba(165,94,234,0.2);
+            margin-top: 15px; font-size: 18px; font-weight: 700;
+            color: #ff8800;
+            padding: 8px 25px;
+            border-radius: 3px;
+            background: rgba(255,102,0,0.15);
+            border: 1px solid rgba(255,102,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
+        /* ЭФФЕКТЫ */
         .click-effect {
             position: absolute; font-size: 24px; font-weight: bold;
-            color: #d980fa; pointer-events: none;
+            color: #ff8800; pointer-events: none;
             animation: floatUp 0.8s ease-out forwards;
-            opacity: 0.8;
+            text-shadow: 0 0 10px rgba(255,136,0,0.8);
         }
         
         @keyframes floatUp {
-            0% { opacity: 0.8; transform: translateY(0); }
+            0% { opacity: 1; transform: translateY(0); }
             100% { opacity: 0; transform: translateY(-100px); }
         }
         
+        /* КОМБО */
         .combo-container {
             position: fixed; bottom: 20px; left: 50%;
             transform: translateX(-50%);
@@ -171,104 +220,120 @@
         }
         
         .combo-box {
-            background: linear-gradient(135deg, #a55eea, #8854d0);
-            padding: 12px 30px; border-radius: 15px;
+            background: linear-gradient(135deg, #ff6600, #cc3300);
+            padding: 12px 30px; border-radius: 3px;
             font-size: 20px; font-weight: bold;
             opacity: 0; transform: scale(0);
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(165,94,234,0.4);
+            box-shadow: 0 5px 20px rgba(255,102,0,0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .combo-box.show { opacity: 1; transform: scale(1); }
         
+        /* ПРОГРЕСС */
         .evolution-bar {
             width: 100%; max-width: 400px; margin: 20px 0;
         }
         
         .evolution-info {
             text-align: center; margin-bottom: 8px; font-size: 13px;
-            color: #aaa;
+            color: #888; text-transform: uppercase; letter-spacing: 1px;
         }
         
         .progress-bar {
-            height: 14px; background: rgba(165,94,234,0.2);
-            border-radius: 10px; overflow: hidden;
-            border: 1px solid rgba(165,94,234,0.3);
+            height: 12px; background: rgba(0,0,0,0.5);
+            border-radius: 0; overflow: hidden;
+            border: 1px solid rgba(255,102,0,0.4);
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #a55eea, #d980fa);
+            background: linear-gradient(90deg, #ff6600, #ff8800, #ffaa00);
             width: 0%; transition: width 0.3s ease;
-            box-shadow: 0 0 15px rgba(165,94,234,0.6);
+            box-shadow: 0 0 15px rgba(255,102,0,0.8);
         }
         
+        /* ТАБЫ */
         .tabs {
             display: flex; gap: 10px; margin-bottom: 15px;
             justify-content: center; flex-wrap: wrap;
         }
         
         .tab-btn {
-            background: rgba(165,94,234,0.2);
-            border: 1px solid rgba(165,94,234,0.3);
-            padding: 12px 24px; border-radius: 12px;
+            background: rgba(255,102,0,0.1);
+            border: 1px solid rgba(255,102,0,0.3);
+            padding: 12px 24px; border-radius: 3px;
             color: white; font-weight: bold; cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 13px;
         }
         
         .tab-btn.active {
-            background: linear-gradient(135deg, #a55eea, #8854d0);
-            box-shadow: 0 5px 20px rgba(165,94,234,0.4);
+            background: linear-gradient(135deg, #ff6600, #cc3300);
+            box-shadow: 0 5px 20px rgba(255,102,0,0.5);
+            border-color: #ff6600;
         }
         
         .tab-content { display: none; width: 100%; }
         .tab-content.active { display: block; }
         
+        /* МАГАЗИН */
         .shop { width: 100%; }
         .shop-title {
             text-align: center; font-size: 24px; margin-bottom: 15px;
-            color: #d980fa; font-weight: 800;
+            color: #ff8800; font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
         
         .upgrade-item {
-            background: rgba(165,94,234,0.1);
-            border-radius: 15px; padding: 15px; margin-bottom: 10px;
+            background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(0,0,0,0.3));
+            border-radius: 3px; padding: 15px; margin-bottom: 10px;
             display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(165,94,234,0.2);
+            border: 1px solid rgba(255,102,0,0.2);
             transition: all 0.3s ease;
         }
         
         .upgrade-item:hover {
-            background: rgba(165,94,234,0.15);
+            background: linear-gradient(135deg, rgba(255,102,0,0.12), rgba(0,0,0,0.4));
             transform: translateX(5px);
+            border-color: rgba(255,102,0,0.4);
         }
         
         .upgrade-info { flex: 1; }
-        .upgrade-name { font-weight: bold; font-size: 15px; margin-bottom: 4px; }
-        .upgrade-desc { font-size: 11px; color: #888; }
+        .upgrade-name { font-weight: bold; font-size: 15px; margin-bottom: 4px; color: #ffaa00; }
+        .upgrade-desc { font-size: 11px; color: #666; }
         
         .upgrade-btn {
-            background: linear-gradient(135deg, #a55eea, #8854d0);
-            border: none; padding: 12px 24px; border-radius: 10px;
+            background: linear-gradient(135deg, #ff6600, #cc3300);
+            border: none; padding: 12px 24px; border-radius: 3px;
             color: white; font-weight: bold; cursor: pointer;
             min-width: 100px;
-            box-shadow: 0 4px 15px rgba(165,94,234,0.3);
+            box-shadow: 0 4px 15px rgba(255,102,0,0.4);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
         }
         
         .upgrade-btn:disabled {
-            background: #333; color: #666; cursor: not-allowed; box-shadow: none;
+            background: #2a2a2a; color: #555; cursor: not-allowed; box-shadow: none;
+            border: 1px solid #333;
         }
         
-        /* КАЗИНО */
+        /* КАЗИНО - АРЕНА */
         .casino-container {
             max-width: 500px;
             margin: 0 auto;
         }
         
         .casino-game {
-            background: rgba(165,94,234,0.1);
-            border: 2px solid rgba(165,94,234,0.3);
-            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(0,0,0,0.4));
+            border: 2px solid rgba(255,102,0,0.3);
+            border-radius: 5px;
             padding: 25px;
             text-align: center;
             margin-bottom: 20px;
@@ -276,19 +341,22 @@
         
         .casino-title {
             font-size: 20px; font-weight: bold;
-            color: #d980fa; margin-bottom: 20px;
+            color: #ff8800; margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .bet-input {
             width: 100%;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(165,94,234,0.3);
-            color: white;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,102,0,0.3);
+            color: #ff8800;
             padding: 12px;
-            border-radius: 10px;
+            border-radius: 3px;
             font-size: 18px;
             margin-bottom: 20px;
             text-align: center;
+            font-family: 'Courier New', monospace;
         }
         
         .casino-buttons {
@@ -301,11 +369,13 @@
         .casino-btn {
             padding: 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 3px;
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .casino-btn:active { transform: scale(0.95); }
@@ -315,8 +385,9 @@
             box-shadow: 0 4px 15px rgba(255,68,68,0.4);
         }
         .btn-black { 
-            background: linear-gradient(135deg, #333, #000); 
+            background: linear-gradient(135deg, #333, #1a1a1a); 
             color: white;
+            border: 1px solid #555;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
@@ -326,46 +397,37 @@
             gap: 10px;
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px solid rgba(165,94,234,0.2);
+            border-top: 1px solid rgba(255,102,0,0.2);
         }
         
-        .casino-stat {
-            text-align: center;
-        }
-        
-        .casino-stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #d980fa;
-        }
-        
-        .casino-stat-label {
-            font-size: 11px;
-            color: #888;
-        }
+        .casino-stat { text-align: center; }
+        .casino-stat-value { font-size: 18px; font-weight: bold; color: #ff8800; font-family: 'Courier New', monospace; }
+        .casino-stat-label { font-size: 10px; color: #666; text-transform: uppercase; }
         
         .casino-result {
             margin-top: 15px;
             font-size: 16px;
             min-height: 24px;
             font-weight: bold;
+            font-family: 'Courier New', monospace;
         }
         
         .casino-result.win { color: #4cd964; }
         .casino-result.lose { color: #ff4444; }
         
-        /* КОЛЛЕКЦИЯ И ДОСТИЖЕНИЯ */
+        /* КОЛЛЕКЦИЯ */
         .collection-grid {
             display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 10px; padding: 15px;
-            background: rgba(165,94,234,0.1);
-            border-radius: 20px;
+            background: rgba(255,102,0,0.05);
+            border-radius: 5px;
+            border: 1px solid rgba(255,102,0,0.15);
         }
         
         .collection-item {
             aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 32px; border-radius: 12px;
-            background: rgba(165,94,234,0.2);
+            font-size: 32px; border-radius: 3px;
+            background: rgba(255,102,0,0.1);
             cursor: pointer; transition: all 0.3s ease;
             border: 2px solid transparent;
             position: relative;
@@ -373,17 +435,18 @@
         
         .collection-item:hover { transform: scale(1.1); }
         .collection-item.locked { filter: grayscale(100%); opacity: 0.3; cursor: not-allowed; }
-        .collection-item.selected { border-color: #d980fa; box-shadow: 0 0 20px rgba(217,128,250,0.5); }
-        .collection-item.hidden { background: rgba(165,94,234,0.05); }
+        .collection-item.selected { border-color: #ff6600; box-shadow: 0 0 20px rgba(255,102,0,0.6); }
+        .collection-item.hidden { background: rgba(255,102,0,0.03); }
         
         .collection-item .tooltip {
             position: absolute; bottom: -40px; left: 50%;
             transform: translateX(-50%); font-size: 11px;
             background: rgba(0,0,0,0.95); padding: 6px 12px;
-            border-radius: 8px; white-space: nowrap;
+            border-radius: 3px; white-space: nowrap;
             opacity: 0; transition: opacity 0.3s;
             pointer-events: none; z-index: 100;
             max-width: 200px;
+            border: 1px solid rgba(255,102,0,0.3);
         }
         
         .collection-item:hover .tooltip { opacity: 1; }
@@ -391,11 +454,13 @@
         /* УВЕДОМЛЕНИЯ */
         .notification {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(135deg, #a55eea, #8854d0);
-            color: white; padding: 15px 30px; border-radius: 12px;
+            background: linear-gradient(135deg, #ff6600, #cc3300);
+            color: white; padding: 15px 30px; border-radius: 3px;
             font-size: 15px; font-weight: bold;
             opacity: 0; transition: all 0.3s ease;
-            z-index: 1000; box-shadow: 0 5px 20px rgba(165,94,234,0.5);
+            z-index: 1000; box-shadow: 0 5px 20px rgba(255,102,0,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .notification.show { opacity: 1; top: 30px; }
@@ -416,50 +481,66 @@
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
         
+        /* ДОСТИЖЕНИЯ */
         .achievement-category {
-            background: rgba(165,94,234,0.08);
-            border-radius: 15px;
+            background: rgba(255,102,0,0.05);
+            border-radius: 5px;
             padding: 15px;
             margin-bottom: 20px;
-            border: 1px solid rgba(165,94,234,0.15);
+            border: 1px solid rgba(255,102,0,0.15);
         }
         
         .category-title {
             font-size: 15px;
             font-weight: 700;
-            color: #d980fa;
+            color: #ff8800;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .achievement-progress {
             text-align: center;
             padding: 15px;
-            background: rgba(165,94,234,0.1);
-            border-radius: 12px;
+            background: rgba(255,102,0,0.1);
+            border-radius: 5px;
             margin-bottom: 20px;
+            border: 1px solid rgba(255,102,0,0.2);
         }
         
         .progress-text {
             font-size: 13px;
-            color: #aaa;
+            color: #888;
             margin-bottom: 8px;
+            text-transform: uppercase;
         }
         
         .progress-bar-small {
             height: 10px;
-            background: rgba(165,94,234,0.2);
-            border-radius: 5px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 0;
             overflow: hidden;
+            border: 1px solid rgba(255,102,0,0.3);
         }
         
         .progress-bar-small .fill {
             height: 100%;
-            background: linear-gradient(90deg, #a55eea, #d980fa);
-            border-radius: 5px;
+            background: linear-gradient(90deg, #ff6600, #ff8800);
+            border-radius: 0;
             transition: width 0.5s ease;
+        }
+        
+        /* FOOTER */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #444;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -467,6 +548,7 @@
     <div class="bg-animation">
         <div class="bg-orb bg-orb-1"></div>
         <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
     </div>
     
     <div class="particles" id="particles"></div>
@@ -475,13 +557,14 @@
     </div>
     
     <div class="header">
-        <div class="game-title">💜 PURPLE CLICKER</div>
+        <div class="game-title">TARGEM CLICKER</div>
+        <div class="game-subtitle">GAME DEVELOPMENT SIMULATOR</div>
         <div class="score-container">
-            <div style="font-size: 14px; color: #aaa; margin-bottom: 5px;">💰 Баланс</div>
+            <div style="font-size: 12px; color: #888; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px;">💰 Бюджет</div>
             <div id="score">0</div>
         </div>
         <div class="stats">
-            <div class="stat-box">⚡ Сила: <b id="power-display">1</b></div>
+            <div class="stat-box">⚡ Код: <b id="power-display">1</b></div>
             <div class="stat-box">🖱️ Клики: <b id="clicks-display">0</b></div>
             <div class="stat-box">💎 Ур: <b id="level-display">1</b></div>
             <div class="stat-box">🏆 Ач: <b id="achievements-display">0/0</b></div>
@@ -491,14 +574,14 @@
     <div class="main-container">
         <div class="left-panel">
             <div class="clicker-container">
-                <div id="clicker-btn" onclick="handleClick(event)">🏠</div>
-                <div class="evolution-name" id="evolution-name">🏠 Дом</div>
+                <div id="clicker-btn" onclick="handleClick(event)">💻</div>
+                <div class="evolution-name" id="evolution-name">💻 Инди-студия</div>
             </div>
 
             <div class="evolution-bar">
                 <div class="evolution-info">
-                    <span id="current-evolution">🏠 Дом</span> → 
-                    <span id="next-evolution">🏖️ 100 кликов</span>
+                    <span id="current-evolution">💻 Инди</span> → 
+                    <span id="next-evolution">🎮 100 кликов</span>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="evolution-progress"></div>
@@ -508,20 +591,20 @@
 
         <div class="right-panel">
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('shop')">🛒 Магазин</button>
-                <button class="tab-btn" onclick="switchTab('casino')">🎰 Казино</button>
-                <button class="tab-btn" onclick="switchTab('collection')">📚 Коллекция</button>
+                <button class="tab-btn active" onclick="switchTab('shop')">🛒 Отдел</button>
+                <button class="tab-btn" onclick="switchTab('casino')">⚔️ Арена</button>
+                <button class="tab-btn" onclick="switchTab('collection')">📚 Игры</button>
                 <button class="tab-btn" onclick="switchTab('achievements')">🏆 Достижения</button>
             </div>
 
             <div class="tab-content active" id="tab-shop">
                 <div class="shop">
-                    <div class="shop-title">⚡ Улучшения</div>
+                    <div class="shop-title">⚡ Отдел Разработки</div>
                     
                     <div class="upgrade-item">
                         <div class="upgrade-info">
-                            <div class="upgrade-name">💪 Сила клика +1</div>
-                            <div class="upgrade-desc">+1 монета за клик</div>
+                            <div class="upgrade-name">💻 Программист +1</div>
+                            <div class="upgrade-desc">+1 к бюджету за клик</div>
                         </div>
                         <button class="upgrade-btn" id="btn-power" onclick="buyUpgrade('power')">
                             <span id="cost-power">5</span> 💰
@@ -530,8 +613,8 @@
 
                     <div class="upgrade-item">
                         <div class="upgrade-info">
-                            <div class="upgrade-name">⚡ Авто-кликер</div>
-                            <div class="upgrade-desc">+1 монета в секунду</div>
+                            <div class="upgrade-name">🤖 Авто-код</div>
+                            <div class="upgrade-desc">+1 бюджет в секунду</div>
                         </div>
                         <button class="upgrade-btn" id="btn-auto" onclick="buyUpgrade('auto')">
                             <span id="cost-auto">25</span> 💰
@@ -540,8 +623,8 @@
 
                     <div class="upgrade-item">
                         <div class="upgrade-info">
-                            <div class="upgrade-name">🚀 Супер клик +5</div>
-                            <div class="upgrade-desc">+5 монет за клик</div>
+                            <div class="upgrade-name">🚀 Senior +5</div>
+                            <div class="upgrade-desc">+5 к бюджету за клик</div>
                         </div>
                         <button class="upgrade-btn" id="btn-super" onclick="buyUpgrade('super')">
                             <span id="cost-super">100</span> 💰
@@ -550,8 +633,8 @@
 
                     <div class="upgrade-item">
                         <div class="upgrade-info">
-                            <div class="upgrade-name">💎 Мега авто +10</div>
-                            <div class="upgrade-desc">+10 монет в секунду</div>
+                            <div class="upgrade-name">🏢 Офис +10</div>
+                            <div class="upgrade-desc">+10 бюджет в секунду</div>
                         </div>
                         <button class="upgrade-btn" id="btn-mega" onclick="buyUpgrade('mega')">
                             <span id="cost-mega">500</span> 💰
@@ -562,15 +645,15 @@
 
             <div class="tab-content" id="tab-casino">
                 <div class="shop">
-                    <div class="shop-title">🎰 Казино</div>
+                    <div class="shop-title">⚔️ Арена</div>
                     
                     <div class="casino-container">
                         <div class="casino-game">
-                            <div class="casino-title">🔴 Красное / ⚫ Чёрное</div>
+                            <div class="casino-title">🔴 Красные / ⚫ Чёрные</div>
                             <input type="number" id="bet-rb" class="bet-input" placeholder="Ставка" value="10" min="1">
                             <div class="casino-buttons">
-                                <button class="casino-btn btn-red" onclick="playRedBlack('red')">🔴 Красное (x2)</button>
-                                <button class="casino-btn btn-black" onclick="playRedBlack('black')">⚫ Чёрное (x2)</button>
+                                <button class="casino-btn btn-red" onclick="playRedBlack('red')">🔴 Красные (x2)</button>
+                                <button class="casino-btn btn-black" onclick="playRedBlack('black')">⚫ Чёрные (x2)</button>
                             </div>
                             <div class="casino-result" id="result-rb"></div>
                             
@@ -585,21 +668,21 @@
                                 </div>
                                 <div class="casino-stat">
                                     <div class="casino-stat-value" id="casino-total">0</div>
-                                    <div class="casino-stat-label">Игр</div>
+                                    <div class="casino-stat-label">Бои</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div style="text-align: center; color: #888; font-size: 12px; margin-top: 15px;">
-                        ⚠️ Казино имеет риск! Играйте ответственно.
+                    <div style="text-align: center; color: #666; font-size: 11px; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;">
+                        ⚠️ Арена имеет риск! Играйте ответственно.
                     </div>
                 </div>
             </div>
 
             <div class="tab-content" id="tab-collection">
                 <div class="collection-section">
-                    <div class="shop-title">📚 Коллекция</div>
+                    <div class="shop-title">📚 Выпущенные Игры</div>
                     <div class="collection-grid" id="collection-grid"></div>
                 </div>
             </div>
@@ -616,17 +699,17 @@
                     </div>
                     
                     <div class="achievement-category">
-                        <div class="category-title">🖱️ Клики</div>
+                        <div class="category-title">🖱️ Разработка</div>
                         <div class="collection-grid" id="achievements-clicks"></div>
                     </div>
                     
                     <div class="achievement-category">
-                        <div class="category-title">💰 Монеты</div>
+                        <div class="category-title">💰 Бюджет</div>
                         <div class="collection-grid" id="achievements-score"></div>
                     </div>
                     
                     <div class="achievement-category">
-                        <div class="category-title">🎰 Казино</div>
+                        <div class="category-title">⚔️ Арена</div>
                         <div class="collection-grid" id="achievements-casino"></div>
                     </div>
                     
@@ -636,12 +719,16 @@
                     </div>
                     
                     <div class="achievement-category">
-                        <div class="category-title">❓ Скрытые</div>
+                        <div class="category-title">❓ Секретные</div>
                         <div class="collection-grid" id="achievements-hidden"></div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="footer">
+        © 2025 TARGEM CLICKER | FAN PROJECT
     </div>
 
     <div class="notification" id="notification"></div>
@@ -650,63 +737,59 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); tg.ready();
 
+        // ЭВОЛЮЦИИ - СТАДИИ РАЗВИТИЯ СТУДИИ
         const evolutions = [
-            { clicks: 0, emoji: '🏠', name: 'Дом' },
-            { clicks: 100, emoji: '🏖️', name: 'Пляж' },
-            { clicks: 250, emoji: '🤡', name: 'Клоун' },
-            { clicks: 500, emoji: '⏰', name: 'Часы' },
-            { clicks: 1000, emoji: '🎪', name: 'Цирк' },
-            { clicks: 2000, emoji: '🎡', name: 'Парк' },
-            { clicks: 4000, emoji: '🏰', name: 'Замок' },
-            { clicks: 7000, emoji: '🚀', name: 'Ракета' },
-            { clicks: 10000, emoji: '🌋', name: 'Вулкан' },
-            { clicks: 25000, emoji: '🌈', name: 'Радуга' },
-            { clicks: 50000, emoji: '👑', name: 'Корона' },
+            { clicks: 0, emoji: '💻', name: 'Инди-студия' },
+            { clicks: 100, emoji: '🎮', name: 'Первая игра' },
+            { clicks: 250, emoji: '👨‍💻', name: 'Команда' },
+            { clicks: 500, emoji: '🏢', name: 'Офис' },
+            { clicks: 1000, emoji: '🚀', name: 'Прорыв' },
+            { clicks: 2000, emoji: '🎯', name: 'Хит' },
+            { clicks: 4000, emoji: '🌟', name: 'Звезда' },
+            { clicks: 7000, emoji: '🏆', name: 'Награды' },
+            { clicks: 10000, emoji: '💰', name: 'Миллионы' },
+            { clicks: 25000, emoji: '🌍', name: 'Мировой' },
+            { clicks: 50000, emoji: '👑', name: 'Легенда' },
             { clicks: 100000, emoji: '💎', name: 'Алмаз' },
-            { clicks: 500000, emoji: '🌟', name: 'Легенда' }
+            { clicks: 500000, emoji: '🎖️', name: 'TARGEM' }
         ];
 
-        // 🏆 ДОСТИЖЕНИЯ (30 штук)
+        // ДОСТИЖЕНИЯ
         const achievements = [
-            // КЛИКИ
-            { id: 'clicks_100', name: 'Первые шаги', desc: '100 кликов', emoji: '🎯', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 100 },
+            { id: 'clicks_100', name: 'Первый код', desc: '100 кликов', emoji: '💻', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 100 },
             { id: 'clicks_500', name: 'Разгон', desc: '500 кликов', emoji: '⚡', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 500 },
-            { id: 'clicks_1000', name: 'Тысячник', desc: '1000 кликов', emoji: '🔥', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 1000 },
-            { id: 'clicks_10000', name: 'Фанатик', desc: '10000 кликов', emoji: '💪', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 10000 },
-            { id: 'clicks_50000', name: 'Легенда', desc: '50000 кликов', emoji: '👑', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 50000 },
+            { id: 'clicks_1000', name: 'Релиз', desc: '1000 кликов', emoji: '🚀', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 1000 },
+            { id: 'clicks_10000', name: 'Хит', desc: '10000 кликов', emoji: '🎯', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 10000 },
+            { id: 'clicks_50000', name: 'Легенда', desc: '50000 кликов', emoji: '🏆', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 50000 },
             
-            // МОНЕТЫ
-            { id: 'score_1000', name: 'Богач', desc: '1000 монет', emoji: '💰', category: 'score', hidden: false, condition: (g) => g.score >= 1000 },
-            { id: 'score_5000', name: 'Состоятельный', desc: '5000 монет', emoji: '💵', category: 'score', hidden: false, condition: (g) => g.score >= 5000 },
-            { id: 'score_10000', name: 'Магнат', desc: '10000 монет', emoji: '💎', category: 'score', hidden: false, condition: (g) => g.score >= 10000 },
-            { id: 'score_50000', name: 'Олигарх', desc: '50000 монет', emoji: '🏦', category: 'score', hidden: false, condition: (g) => g.score >= 50000 },
-            { id: 'score_100000', name: 'Миллионер', desc: '100000 монет', emoji: '🤑', category: 'score', hidden: false, condition: (g) => g.score >= 100000 },
+            { id: 'score_1000', name: 'Стартап', desc: '1000 бюджета', emoji: '💰', category: 'score', hidden: false, condition: (g) => g.score >= 1000 },
+            { id: 'score_5000', name: 'Инвестор', desc: '5000 бюджета', emoji: '💵', category: 'score', hidden: false, condition: (g) => g.score >= 5000 },
+            { id: 'score_10000', name: 'Прибыль', desc: '10000 бюджета', emoji: '📈', category: 'score', hidden: false, condition: (g) => g.score >= 10000 },
+            { id: 'score_50000', name: 'Корпорация', desc: '50000 бюджета', emoji: '🏢', category: 'score', hidden: false, condition: (g) => g.score >= 50000 },
+            { id: 'score_100000', name: 'Империя', desc: '100000 бюджета', emoji: '👑', category: 'score', hidden: false, condition: (g) => g.score >= 100000 },
             
-            // КАЗИНО
-            { id: 'casino_first', name: 'Первая игра', desc: 'Сыграть в казино 1 раз', emoji: '🎰', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 1 },
-            { id: 'casino_10', name: 'Игрок', desc: 'Сыграть 10 раз', emoji: '🎲', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 10 },
-            { id: 'casino_50', name: 'Азартный', desc: 'Сыграть 50 раз', emoji: '🃏', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 50 },
-            { id: 'casino_100', name: 'Казинозависимый', desc: 'Сыграть 100 раз', emoji: '♠️', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 100 },
-            { id: 'casino_wins_10', name: 'Везунчик', desc: '10 побед в казино', emoji: '🍀', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 10 },
-            { id: 'casino_wins_50', name: 'Фортуна', desc: '50 побед в казино', emoji: '🎯', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 50 },
-            { id: 'casino_bigwin', name: 'Крупный выигрыш', desc: 'Выиграть 5000+ за раз', emoji: '💸', category: 'casino', hidden: false, condition: (g) => g.casinoBigWin >= 1 },
-            { id: 'casino_streak_5', name: 'Серия удачи', desc: '5 побед подряд', emoji: '🔥', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 5 },
-            { id: 'casino_streak_10', name: 'Непобедимый', desc: '10 побед подряд', emoji: '👑', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 10 },
+            { id: 'casino_first', name: 'Первый бой', desc: '1 игра на арене', emoji: '⚔️', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 1 },
+            { id: 'casino_10', name: 'Боец', desc: '10 боёв', emoji: '🥊', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 10 },
+            { id: 'casino_50', name: 'Ветеран', desc: '50 боёв', emoji: '🎖️', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 50 },
+            { id: 'casino_100', name: 'Чемпион', desc: '100 боёв', emoji: '🏆', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 100 },
+            { id: 'casino_wins_10', name: 'Серия побед', desc: '10 побед', emoji: '🔥', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 10 },
+            { id: 'casino_wins_50', name: 'Непобедимый', desc: '50 побед', emoji: '💪', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 50 },
+            { id: 'casino_bigwin', name: 'Джекпот', desc: '5000+ за раз', emoji: '💸', category: 'casino', hidden: false, condition: (g) => g.casinoBigWin >= 1 },
+            { id: 'casino_streak_5', name: 'Комбо', desc: '5 побед подряд', emoji: '⚡', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 5 },
+            { id: 'casino_streak_10', name: 'Бог арены', desc: '10 побед подряд', emoji: '👑', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 10 },
             
-            // TELEGRAM
-            { id: 'tg_user', name: 'Пользователь TG', desc: 'Играть через Telegram', emoji: '📱', category: 'tg', hidden: false, condition: (g) => g.isTelegram === true },
-            { id: 'tg_share', name: 'Делюсь!', desc: 'Открыть игру 5 раз', emoji: '📤', category: 'tg', hidden: false, condition: (g) => g.openCount >= 5 },
-            { id: 'tg_daily', name: 'Ежедневный', desc: 'Играть 3 дня подряд', emoji: '📅', category: 'tg', hidden: false, condition: (g) => g.dailyStreak >= 3 },
-            { id: 'tg_weekly', name: 'Недельный', desc: 'Играть 7 дней подряд', emoji: '🗓️', category: 'tg', hidden: false, condition: (g) => g.dailyStreak >= 7 },
+            { id: 'tg_user', name: 'Игрок TG', desc: 'Играть через Telegram', emoji: '📱', category: 'tg', hidden: false, condition: (g) => g.isTelegram === true },
+            { id: 'tg_share', name: 'Делюсь!', desc: 'Открыть 5 раз', emoji: '📤', category: 'tg', hidden: false, condition: (g) => g.openCount >= 5 },
+            { id: 'tg_daily', name: 'Ежедневный', desc: '3 дня подряд', emoji: '📅', category: 'tg', hidden: false, condition: (g) => g.dailyStreak >= 3 },
+            { id: 'tg_weekly', name: 'Недельный', desc: '7 дней подряд', emoji: '🗓️', category: 'tg', hidden: false, condition: (g) => g.dailyStreak >= 7 },
             
-            // СКРЫТЫЕ
-            { id: 'hidden_bankrupt', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Банкрот', realDesc: 'Проиграть всё в казино', condition: (g) => g.casinoBankrupt >= 1 },
-            { id: 'hidden_rich', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Рокфеллер', realDesc: 'Иметь 1,000,000 монет', condition: (g) => g.score >= 1000000 },
+            { id: 'hidden_bankrupt', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Банкрот', realDesc: 'Проиграть всё на арене', condition: (g) => g.casinoBankrupt >= 1 },
+            { id: 'hidden_rich', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Магнат', realDesc: '1,000,000 бюджета', condition: (g) => g.score >= 1000000 },
             { id: 'hidden_clicker', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Клик-машина', realDesc: '100,000 кликов', condition: (g) => g.totalClicks >= 100000 },
             { id: 'hidden_patient', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Терпеливый', realDesc: 'Играть 1 час', condition: (g) => g.playTime >= 3600 },
-            { id: 'hidden_lucky', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Рождённый в рубашке', realDesc: '10 побед подряд в казино', condition: (g) => g.casinoStreak >= 10 },
-            { id: 'hidden_collector', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Коллекционер', realDesc: 'Открыть все эволюции', condition: (g) => g.unlockedEvolutions.length >= evolutions.length },
-            { id: 'hidden_perfect', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Идеальный', realDesc: 'Открыть все достижения', condition: (g) => g.achievements.length >= achievements.filter(a => !a.hidden).length }
+            { id: 'hidden_lucky', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Везунчик', realDesc: '10 побед подряд', condition: (g) => g.casinoStreak >= 10 },
+            { id: 'hidden_collector', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Коллекционер', realDesc: 'Все игры', condition: (g) => g.unlockedEvolutions.length >= evolutions.length },
+            { id: 'hidden_perfect', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Идеальный', realDesc: 'Все достижения', condition: (g) => g.achievements.length >= achievements.filter(a => !a.hidden).length }
         ];
 
         let game = {
@@ -738,14 +821,13 @@
         };
 
         function loadGame() {
-            const saved = localStorage.getItem('purpleClickerSave');
+            const saved = localStorage.getItem('targemClickerSave');
             if (saved) {
                 const data = JSON.parse(saved);
                 game = { ...game, ...data };
                 game.startTime = Date.now() - (game.playTime * 1000);
             }
             
-            // Проверка ежедневной серии
             const today = new Date().toDateString();
             if (game.lastPlayDate !== today) {
                 if (game.lastPlayDate === new Date(Date.now() - 86400000).toDateString()) {
@@ -766,7 +848,7 @@
 
         function saveGame() {
             game.playTime = Math.floor((Date.now() - game.startTime) / 1000);
-            localStorage.setItem('purpleClickerSave', JSON.stringify(game));
+            localStorage.setItem('targemClickerSave', JSON.stringify(game));
         }
 
         function updateUI() {
@@ -803,7 +885,7 @@
             game.currentEvolution = newEvo;
             if (!game.unlockedEvolutions.includes(newEvo)) {
                 game.unlockedEvolutions.push(newEvo);
-                showNotification(`🎉 Новая эволюция: ${evolutions[newEvo].name}!`);
+                showNotification(`🎉 Новая стадия: ${evolutions[newEvo].name}!`);
                 createParticles(evolutions[newEvo].emoji, 15);
             }
             
@@ -846,7 +928,7 @@
             game.totalClicks++;
             
             createClickEffect(e, income);
-            document.getElementById('clicker-btn').style.transform = 'scale(0.88)';
+            document.getElementById('clicker-btn').style.transform = 'scale(0.92)';
             setTimeout(() => document.getElementById('clicker-btn').style.transform = 'scale(1)', 80);
             
             updateEvolution(true);
@@ -901,7 +983,6 @@
             }
         }
 
-        // 🎰 КАЗИНО ФУНКЦИИ
         function playRedBlack(choice) {
             const betInput = document.getElementById('bet-rb');
             const bet = parseInt(betInput.value);
@@ -913,12 +994,11 @@
                 return;
             }
             if (bet > game.score) {
-                resultDiv.innerText = '❌ Недостаточно монет';
+                resultDiv.innerText = '❌ Недостаточно бюджета';
                 resultDiv.className = 'casino-result lose';
                 return;
             }
             
-            const oldScore = game.score;
             game.score -= bet;
             game.casinoTotal++;
             
@@ -932,17 +1012,16 @@
                 if (game.casinoStreak > game.casinoMaxStreak) game.casinoMaxStreak = game.casinoStreak;
                 if (winAmount >= 5000) game.casinoBigWin++;
                 
-                resultDiv.innerText = `✅ Победа! +${winAmount}`;
+                resultDiv.innerText = `✅ ПОБЕДА! +${winAmount}`;
                 resultDiv.className = 'casino-result win';
                 createParticles('💰', 10);
             } else {
                 game.casinoLosses++;
                 game.casinoStreak = 0;
                 
-                resultDiv.innerText = '❌ Проигрыш';
+                resultDiv.innerText = '❌ ПОРАЖЕНИЕ';
                 resultDiv.className = 'casino-result lose';
                 
-                // Проверка на банкротство
                 if (game.score <= 0) {
                     game.casinoBankrupt++;
                 }
@@ -965,7 +1044,7 @@
                     game.achievements.push(ach.id);
                     
                     if (ach.hidden) {
-                        showNotification(`🔓 Скрытое достижение: ${ach.realName}!`);
+                        showNotification(`🔓 СЕКРЕТНОЕ: ${ach.realName}!`);
                     } else {
                         showNotification(`🏆 ${ach.name}!`);
                     }
