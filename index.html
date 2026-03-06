@@ -96,6 +96,28 @@
             text-shadow: 0 0 30px rgba(255,102,0,0.5);
             letter-spacing: 3px;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .game-title:hover {
+            text-shadow: 0 0 50px rgba(255,102,0,0.8), 0 0 80px rgba(255,102,0,0.5);
+            transform: scale(1.02);
+        }
+        
+        .game-title:active {
+            transform: scale(0.98);
+        }
+        
+        .game-title.cheat-active {
+            animation: cheatPulse 0.5s ease;
+        }
+        
+        @keyframes cheatPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
         
         .game-subtitle {
@@ -458,11 +480,7 @@
             margin-top: 30px; text-align: center;
             color: #444; font-size: 11px;
             text-transform: uppercase; letter-spacing: 2px;
-            cursor: pointer;
-            transition: color 0.3s;
         }
-        
-        .footer:hover { color: var(--primary-color, #ff6600); }
         
         /* ЧИТ МЕНЮ */
         .cheat-menu {
@@ -665,7 +683,7 @@
     </div>
     
     <div class="header">
-        <div class="game-title">TARGEM MAP</div>
+        <div class="game-title" id="game-title" ondblclick="openCheatMenu()">TARGEM MAP</div>
         <div class="game-subtitle">TERRITORY CONQUEST</div>
         <div class="score-container">
             <div style="font-size: 12px; color: #888; margin-bottom: 5px; text-transform: uppercase;">💰 Ресурсы</div>
@@ -826,7 +844,7 @@
         </div>
     </div>
 
-    <div class="footer" id="footer" onclick="footerClick()">
+    <div class="footer">
         © 2025 TARGEM MAP CLICKER
     </div>
 
@@ -836,17 +854,13 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); tg.ready();
 
-        // Цветовые темы
         let currentTheme = {
             primary: '#ff6600',
             secondary: '#cc3300',
             accent: '#ffaa00'
         };
 
-        // Переменная для читов
         let cheatsEnabled = false;
-        let footerClickCount = 0;
-        let footerClickTimer = null;
 
         const locations = [
             { clicks: 0, emoji: '🗺️', name: 'Неизведанно' },
@@ -933,7 +947,6 @@
                 game.startTime = Date.now() - (game.playTime * 1000);
             }
             
-            // Загрузка темы
             const savedTheme = localStorage.getItem('targemMapTheme');
             if (savedTheme) {
                 currentTheme = JSON.parse(savedTheme);
@@ -1255,28 +1268,18 @@
         }
 
         // ЧИТ МЕНЮ ФУНКЦИИ
-        function footerClick() {
-            footerClickCount++;
-            
-            if (footerClickTimer) clearTimeout(footerClickTimer);
-            
-            footerClickTimer = setTimeout(() => {
-                footerClickCount = 0;
-            }, 2000);
-            
-            if (footerClickCount >= 5) {
-                openCheatMenu();
-                footerClickCount = 0;
-            }
-        }
-
         function openCheatMenu() {
+            const title = document.getElementById('game-title');
+            title.classList.add('cheat-active');
+            setTimeout(() => title.classList.remove('cheat-active'), 500);
+            
             document.getElementById('cheat-menu').classList.add('show');
             document.getElementById('cheat-overlay').classList.add('show');
             
-            // Заполняем текущими значениями
             document.getElementById('cheat-balance').value = Math.floor(game.score);
             document.getElementById('cheat-power').value = game.clickPower;
+            
+            showNotification('🔧 CHEAT MENU OPENED');
         }
 
         function closeCheatMenu() {
@@ -1296,7 +1299,6 @@
                 game.clickPower = power;
             }
             
-            // Включаем читы
             cheatsEnabled = true;
             game.cheatsEnabled = true;
             
@@ -1315,7 +1317,6 @@
             localStorage.setItem('targemMapTheme', JSON.stringify(theme));
         }
 
-        // Выбор цвета
         document.querySelectorAll('.color-option').forEach(option => {
             option.addEventListener('click', function() {
                 document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
