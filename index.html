@@ -14,6 +14,7 @@
             min-height: 100vh; display: flex; flex-direction: column;
             align-items: center; padding: 20px; user-select: none;
             overflow-x: hidden;
+            transition: background 0.5s ease;
         }
         
         .bg-animation {
@@ -29,7 +30,7 @@
         
         .bg-orb-1 {
             width: 400px; height: 400px;
-            background: linear-gradient(135deg, #ff6600, #cc3300);
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
             top: -150px; left: -150px;
         }
         
@@ -42,7 +43,7 @@
         
         .bg-orb-3 {
             width: 300px; height: 300px;
-            background: linear-gradient(135deg, #ff8800, #ff4400);
+            background: linear-gradient(135deg, var(--primary-color, #ff8800), var(--secondary-color, #ff4400));
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             animation-delay: -3s;
@@ -76,9 +77,7 @@
             top: 20px;
         }
         
-        .right-panel {
-            width: 100%;
-        }
+        .right-panel { width: 100%; }
         
         .header { 
             text-align: center; 
@@ -88,7 +87,7 @@
         
         .game-title {
             font-size: 44px; font-weight: 900;
-            background: linear-gradient(135deg, #ff6600, #ff8800, #ffaa00, #ff6600);
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--accent-color, #ffaa00), var(--primary-color, #ff6600));
             background-size: 300% 300%;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -123,7 +122,7 @@
         
         #score { 
             font-size: 52px; font-weight: 900; 
-            color: #ff8800;
+            color: var(--primary-color, #ff8800);
             text-shadow: 0 0 25px rgba(255,136,0,0.6);
             font-family: 'Courier New', monospace;
         }
@@ -140,9 +139,8 @@
             min-width: 100px;
         }
         
-        .stat-box b { color: #ff8800; }
+        .stat-box b { color: var(--primary-color, #ff8800); }
         
-        /* КЛИКЕР - КАРТА */
         .clicker-container { 
             margin: 30px 0; position: relative; 
             display: flex; flex-direction: column; align-items: center;
@@ -151,7 +149,7 @@
         #clicker-btn {
             width: 200px; height: 200px; border-radius: 10px;
             background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-            border: 3px solid #ff6600;
+            border: 3px solid var(--primary-color, #ff6600);
             display: flex; align-items: center; justify-content: center;
             font-size: 80px; cursor: pointer;
             box-shadow: 0 15px 50px rgba(255,102,0,0.3);
@@ -181,7 +179,7 @@
         
         .location-name {
             margin-top: 15px; font-size: 18px; font-weight: 700;
-            color: #ff8800;
+            color: var(--primary-color, #ff8800);
             padding: 8px 25px;
             border-radius: 3px;
             background: rgba(255,102,0,0.15);
@@ -190,10 +188,9 @@
             letter-spacing: 2px;
         }
         
-        /* ЭФФЕКТЫ */
         .click-effect {
             position: absolute; font-size: 24px; font-weight: bold;
-            color: #ff8800; pointer-events: none;
+            color: var(--primary-color, #ff8800); pointer-events: none;
             animation: floatUp 0.8s ease-out forwards;
             text-shadow: 0 0 10px rgba(255,136,0,0.8);
         }
@@ -203,7 +200,6 @@
             100% { opacity: 0; transform: translateY(-100px); }
         }
         
-        /* КОМБО */
         .combo-container {
             position: fixed; bottom: 20px; left: 50%;
             transform: translateX(-50%);
@@ -211,7 +207,7 @@
         }
         
         .combo-box {
-            background: linear-gradient(135deg, #ff6600, #cc3300);
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
             padding: 12px 30px; border-radius: 3px;
             font-size: 20px; font-weight: bold;
             opacity: 0; transform: scale(0);
@@ -222,7 +218,6 @@
         
         .combo-box.show { opacity: 1; transform: scale(1); }
         
-        /* ПРОГРЕСС */
         .progress-bar {
             width: 100%; max-width: 400px; margin: 20px 0;
         }
@@ -239,12 +234,11 @@
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ff6600, #ff8800);
+            background: linear-gradient(90deg, var(--primary-color, #ff6600), var(--accent-color, #ff8800));
             width: 0%; transition: width 0.3s ease;
             box-shadow: 0 0 15px rgba(255,102,0,0.8);
         }
         
-        /* ТАБЫ */
         .tabs {
             display: flex; gap: 10px; margin-bottom: 15px;
             justify-content: center; flex-wrap: wrap;
@@ -261,18 +255,17 @@
         }
         
         .tab-btn.active {
-            background: linear-gradient(135deg, #ff6600, #cc3300);
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
             box-shadow: 0 5px 20px rgba(255,102,0,0.5);
         }
         
         .tab-content { display: none; width: 100%; }
         .tab-content.active { display: block; }
         
-        /* МАГАЗИН */
         .shop { width: 100%; }
         .shop-title {
             text-align: center; font-size: 24px; margin-bottom: 15px;
-            color: #ff8800; font-weight: 800;
+            color: var(--primary-color, #ff8800); font-weight: 800;
             text-transform: uppercase;
         }
         
@@ -290,11 +283,11 @@
         }
         
         .upgrade-info { flex: 1; }
-        .upgrade-name { font-weight: bold; font-size: 15px; margin-bottom: 4px; color: #ffaa00; }
+        .upgrade-name { font-weight: bold; font-size: 15px; margin-bottom: 4px; color: var(--accent-color, #ffaa00); }
         .upgrade-desc { font-size: 11px; color: #666; }
         
         .upgrade-btn {
-            background: linear-gradient(135deg, #ff6600, #cc3300);
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
             border: none; padding: 12px 24px; border-radius: 3px;
             color: white; font-weight: bold; cursor: pointer;
             min-width: 100px;
@@ -306,7 +299,6 @@
             background: #2a2a2a; color: #555; cursor: not-allowed;
         }
         
-        /* КАЗИНО */
         .casino-container { max-width: 500px; margin: 0 auto; }
         
         .casino-game {
@@ -320,7 +312,7 @@
         
         .casino-title {
             font-size: 20px; font-weight: bold;
-            color: #ff8800; margin-bottom: 20px;
+            color: var(--primary-color, #ff8800); margin-bottom: 20px;
             text-transform: uppercase;
         }
         
@@ -328,7 +320,7 @@
             width: 100%;
             background: rgba(0,0,0,0.5);
             border: 1px solid rgba(255,102,0,0.3);
-            color: #ff8800;
+            color: var(--primary-color, #ff8800);
             padding: 12px;
             border-radius: 3px;
             font-size: 18px;
@@ -358,7 +350,7 @@
         }
         
         .casino-stat { text-align: center; }
-        .casino-stat-value { font-size: 18px; font-weight: bold; color: #ff8800; }
+        .casino-stat-value { font-size: 18px; font-weight: bold; color: var(--primary-color, #ff8800); }
         .casino-stat-label { font-size: 10px; color: #666; text-transform: uppercase; }
         
         .casino-result {
@@ -369,7 +361,6 @@
         .casino-result.win { color: #4cd964; }
         .casino-result.lose { color: #ff4444; }
         
-        /* КАРТА */
         .map-grid {
             display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 10px; padding: 15px;
@@ -389,7 +380,7 @@
         
         .map-item:hover { transform: scale(1.1); }
         .map-item.locked { filter: grayscale(100%); opacity: 0.3; cursor: not-allowed; }
-        .map-item.selected { border-color: #ff6600; box-shadow: 0 0 20px rgba(255,102,0,0.6); }
+        .map-item.selected { border-color: var(--primary-color, #ff6600); box-shadow: 0 0 20px rgba(255,102,0,0.6); }
         
         .map-item .tooltip {
             position: absolute; bottom: -40px; left: 50%;
@@ -403,10 +394,9 @@
         
         .map-item:hover .tooltip { opacity: 1; }
         
-        /* УВЕДОМЛЕНИЯ */
         .notification {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff6600, #cc3300);
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
             color: white; padding: 15px 30px; border-radius: 3px;
             font-size: 15px; font-weight: bold;
             opacity: 0; transition: all 0.3s ease;
@@ -432,7 +422,6 @@
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
         
-        /* ДОСТИЖЕНИЯ */
         .achievement-category {
             background: rgba(255,102,0,0.05);
             border-radius: 5px;
@@ -443,7 +432,7 @@
         
         .category-title {
             font-size: 15px; font-weight: 700;
-            color: #ff8800; margin-bottom: 12px;
+            color: var(--primary-color, #ff8800); margin-bottom: 12px;
             text-transform: uppercase;
         }
         
@@ -461,7 +450,7 @@
         }
         
         .progress-bar-small .fill {
-            height: 100%; background: linear-gradient(90deg, #ff6600, #ff8800);
+            height: 100%; background: linear-gradient(90deg, var(--primary-color, #ff6600), var(--accent-color, #ff8800));
             transition: width 0.5s ease;
         }
         
@@ -469,6 +458,160 @@
             margin-top: 30px; text-align: center;
             color: #444; font-size: 11px;
             text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .footer:hover { color: var(--primary-color, #ff6600); }
+        
+        /* ЧИТ МЕНЮ */
+        .cheat-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, #1a1a2e, #0a0a0f);
+            border: 3px solid var(--primary-color, #ff6600);
+            border-radius: 10px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            z-index: 2000;
+            box-shadow: 0 0 50px rgba(255,102,0,0.5), 0 0 100px rgba(255,102,0,0.3);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .cheat-menu.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .cheat-menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .cheat-menu-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .cheat-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary-color, #ff6600);
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255,102,0,0.5);
+        }
+        
+        .cheat-section {
+            margin-bottom: 20px;
+        }
+        
+        .cheat-label {
+            font-size: 13px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .cheat-input {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,102,0,0.3);
+            color: var(--primary-color, #ff8800);
+            padding: 12px;
+            border-radius: 3px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+        
+        .cheat-input:focus {
+            outline: none;
+            border-color: var(--primary-color, #ff6600);
+            box-shadow: 0 0 15px rgba(255,102,0,0.3);
+        }
+        
+        .cheat-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .cheat-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        
+        .cheat-btn-apply {
+            background: linear-gradient(135deg, #4cd964, #34c759);
+            color: white;
+        }
+        
+        .cheat-btn-apply:hover {
+            box-shadow: 0 0 20px rgba(76,217,100,0.5);
+            transform: scale(1.05);
+        }
+        
+        .cheat-btn-close {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+        }
+        
+        .cheat-btn-close:hover {
+            box-shadow: 0 0 20px rgba(255,68,68,0.5);
+            transform: scale(1.05);
+        }
+        
+        .color-picker {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .color-option {
+            aspect-ratio: 1;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.selected {
+            border-color: white;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+        
+        .cheat-warning {
+            font-size: 11px;
+            color: #ff4444;
+            text-align: center;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -482,6 +625,43 @@
     <div class="particles" id="particles"></div>
     <div class="combo-container">
         <div class="combo-box" id="combo-box">🔥 COMBO x1</div>
+    </div>
+    
+    <!-- ЧИТ МЕНЮ -->
+    <div class="cheat-menu-overlay" id="cheat-overlay" onclick="closeCheatMenu()"></div>
+    <div class="cheat-menu" id="cheat-menu">
+        <div class="cheat-title">🔧 CHEAT MENU</div>
+        
+        <div class="cheat-section">
+            <div class="cheat-label">💰 Баланс</div>
+            <input type="number" id="cheat-balance" class="cheat-input" placeholder="0" value="0">
+        </div>
+        
+        <div class="cheat-section">
+            <div class="cheat-label">⚡ Сила клика</div>
+            <input type="number" id="cheat-power" class="cheat-input" placeholder="1" value="1">
+        </div>
+        
+        <div class="cheat-section">
+            <div class="cheat-label">🎨 Цвет темы</div>
+            <div class="color-picker">
+                <div class="color-option selected" style="background: linear-gradient(135deg, #ff6600, #cc3300);" data-primary="#ff6600" data-secondary="#cc3300" data-accent="#ffaa00"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #4cd964, #34c759);" data-primary="#4cd964" data-secondary="#34c759" data-accent="#7fff00"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #00d4ff, #0099ff);" data-primary="#00d4ff" data-secondary="#0099ff" data-accent="#00ffff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ff00ff, #cc00cc);" data-primary="#ff00ff" data-secondary="#cc00cc" data-accent="#ff66ff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ffff00, #ffcc00);" data-primary="#ffff00" data-secondary="#ffcc00" data-accent="#ffffff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ff4444, #cc0000);" data-primary="#ff4444" data-secondary="#cc0000" data-accent="#ff6666"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #a55eea, #8854d0);" data-primary="#a55eea" data-secondary="#8854d0" data-accent="#d980fa"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ffffff, #cccccc);" data-primary="#ffffff" data-secondary="#cccccc" data-accent="#eeeeee"></div>
+            </div>
+        </div>
+        
+        <div class="cheat-buttons">
+            <button class="cheat-btn cheat-btn-apply" onclick="applyCheats()">✅ Применить</button>
+            <button class="cheat-btn cheat-btn-close" onclick="closeCheatMenu()">❌ Закрыть</button>
+        </div>
+        
+        <div class="cheat-warning">⚠️ Использование читов отключает достижения</div>
     </div>
     
     <div class="header">
@@ -646,7 +826,7 @@
         </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" id="footer" onclick="footerClick()">
         © 2025 TARGEM MAP CLICKER
     </div>
 
@@ -656,7 +836,18 @@
         const tg = window.Telegram.WebApp;
         tg.expand(); tg.ready();
 
-        // ЛОКАЦИИ НА КАРТЕ
+        // Цветовые темы
+        let currentTheme = {
+            primary: '#ff6600',
+            secondary: '#cc3300',
+            accent: '#ffaa00'
+        };
+
+        // Переменная для читов
+        let cheatsEnabled = false;
+        let footerClickCount = 0;
+        let footerClickTimer = null;
+
         const locations = [
             { clicks: 0, emoji: '🗺️', name: 'Неизведанно' },
             { clicks: 100, emoji: '🏠', name: 'Деревня' },
@@ -673,7 +864,6 @@
             { clicks: 500000, emoji: '👑', name: 'Империя' }
         ];
 
-        // ДОСТИЖЕНИЯ
         const achievements = [
             { id: 'clicks_100', name: 'Первый шаг', desc: '100 кликов', emoji: '👣', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 100 },
             { id: 'clicks_500', name: 'Исследователь', desc: '500 кликов', emoji: '🧭', category: 'clicks', hidden: false, condition: (g) => g.totalClicks >= 500 },
@@ -731,7 +921,8 @@
             dailyStreak: 0,
             lastPlayDate: null,
             playTime: 0,
-            startTime: Date.now()
+            startTime: Date.now(),
+            cheatsEnabled: false
         };
 
         function loadGame() {
@@ -740,6 +931,13 @@
                 const data = JSON.parse(saved);
                 game = { ...game, ...data };
                 game.startTime = Date.now() - (game.playTime * 1000);
+            }
+            
+            // Загрузка темы
+            const savedTheme = localStorage.getItem('targemMapTheme');
+            if (savedTheme) {
+                currentTheme = JSON.parse(savedTheme);
+                applyTheme(currentTheme);
             }
             
             const today = new Date().toDateString();
@@ -753,6 +951,7 @@
             }
             
             game.openCount++;
+            cheatsEnabled = game.cheatsEnabled;
             updateLocation(true);
             renderMap();
             renderAchievements();
@@ -762,6 +961,7 @@
 
         function saveGame() {
             game.playTime = Math.floor((Date.now() - game.startTime) / 1000);
+            game.cheatsEnabled = cheatsEnabled;
             localStorage.setItem('targemMapSave', JSON.stringify(game));
         }
 
@@ -846,7 +1046,7 @@
             setTimeout(() => document.getElementById('clicker-btn').style.transform = 'scale(1)', 80);
             
             updateLocation(true);
-            checkAchievements();
+            if (!cheatsEnabled) checkAchievements();
             updateUI();
         }
 
@@ -892,7 +1092,7 @@
                 }
                 
                 showNotification('✅ Улучшено!');
-                checkAchievements();
+                if (!cheatsEnabled) checkAchievements();
                 updateUI();
             }
         }
@@ -940,7 +1140,7 @@
             }
             
             updateCasinoStats();
-            checkAchievements();
+            if (!cheatsEnabled) checkAchievements();
             updateUI();
         }
 
@@ -1053,6 +1253,82 @@
             if (tab === 'map') renderMap();
             if (tab === 'achievements') renderAchievements();
         }
+
+        // ЧИТ МЕНЮ ФУНКЦИИ
+        function footerClick() {
+            footerClickCount++;
+            
+            if (footerClickTimer) clearTimeout(footerClickTimer);
+            
+            footerClickTimer = setTimeout(() => {
+                footerClickCount = 0;
+            }, 2000);
+            
+            if (footerClickCount >= 5) {
+                openCheatMenu();
+                footerClickCount = 0;
+            }
+        }
+
+        function openCheatMenu() {
+            document.getElementById('cheat-menu').classList.add('show');
+            document.getElementById('cheat-overlay').classList.add('show');
+            
+            // Заполняем текущими значениями
+            document.getElementById('cheat-balance').value = Math.floor(game.score);
+            document.getElementById('cheat-power').value = game.clickPower;
+        }
+
+        function closeCheatMenu() {
+            document.getElementById('cheat-menu').classList.remove('show');
+            document.getElementById('cheat-overlay').classList.remove('show');
+        }
+
+        function applyCheats() {
+            const balance = parseInt(document.getElementById('cheat-balance').value);
+            const power = parseInt(document.getElementById('cheat-power').value);
+            
+            if (!isNaN(balance) && balance >= 0) {
+                game.score = balance;
+            }
+            
+            if (!isNaN(power) && power >= 1) {
+                game.clickPower = power;
+            }
+            
+            // Включаем читы
+            cheatsEnabled = true;
+            game.cheatsEnabled = true;
+            
+            showNotification('⚠️ Читы активированы!');
+            createParticles('🔧', 20);
+            
+            closeCheatMenu();
+            updateUI();
+        }
+
+        function applyTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.style.setProperty('--primary-color', theme.primary);
+            document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+            document.documentElement.style.setProperty('--accent-color', theme.accent);
+            localStorage.setItem('targemMapTheme', JSON.stringify(theme));
+        }
+
+        // Выбор цвета
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const theme = {
+                    primary: this.dataset.primary,
+                    secondary: this.dataset.secondary,
+                    accent: this.dataset.accent
+                };
+                applyTheme(theme);
+            });
+        });
 
         setInterval(() => {
             if (game.autoClicker > 0) {
