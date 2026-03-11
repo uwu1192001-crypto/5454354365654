@@ -321,7 +321,7 @@
             background: #2a2a2a; color: #555; cursor: not-allowed;
         }
         
-        /* АРЕНА - ОРЁЛ ИЛИ РЕШКА */
+        /* АРЕНА */
         .casino-container { max-width: 500px; margin: 0 auto; }
         
         .casino-game {
@@ -676,7 +676,7 @@
             letter-spacing: 1px;
         }
         
-        /* НАСТРОЙКИ (ПРАВЫЙ ВЕРХНИЙ УГОЛ) */
+        /* НАСТРОЙКИ */
         .settings-btn {
             position: fixed;
             top: 20px;
@@ -937,7 +937,7 @@
         
         <div class="settings-section">
             <div class="settings-label">⚠️ Опасная зона</div>
-            <button class="reset-btn" onclick="confirmReset()">🗑️ Сбросить прогресс</button>
+            <button class="reset-btn" onclick="confirmReset()">🗑️ Полный сброс</button>
         </div>
     </div>
     
@@ -1110,7 +1110,7 @@
                     </div>
                     
                     <div style="text-align: center; color: #666; font-size: 11px; margin-top: 15px; text-transform: uppercase;">
-                        🌐 Онлайн игроки • Обновляется каждые 5 секунд
+                        🌐 Глобальный топ • Обновляется каждые 5 секунд
                     </div>
                 </div>
             </div>
@@ -1231,39 +1231,19 @@
             { id: 'hidden_perfect', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Идеальный', realDesc: 'Все достижения', condition: (g) => g.achievements.length >= achievements.filter(a => !a.hidden).length }
         ];
 
-        // Реальные игроки из localStorage (симуляция онлайн игроков)
-        function getLeaderboardData() {
-            const defaultPlayers = [
-                { name: 'ProGamer', score: 50000000, level: 5000, lastSeen: Date.now() },
-                { name: 'ClickMaster', score: 25000000, level: 2500, lastSeen: Date.now() },
-                { name: 'TargemFan', score: 10000000, level: 1000, lastSeen: Date.now() },
-                { name: 'MapExplorer', score: 5000000, level: 500, lastSeen: Date.now() },
-                { name: 'ResourceKing', score: 1000000, level: 100, lastSeen: Date.now() },
-                { name: 'CoinFlipPro', score: 500000, level: 50, lastSeen: Date.now() },
-                { name: 'TerritoryLord', score: 250000, level: 25, lastSeen: Date.now() },
-                { name: 'BaseBuilder', score: 100000, level: 10, lastSeen: Date.now() },
-                { name: 'NewPlayer', score: 50000, level: 5, lastSeen: Date.now() },
-                { name: 'Beginner', score: 10000, level: 1, lastSeen: Date.now() }
-            ];
-            
-            // Получаем сохранённых игроков
-            let savedPlayers = localStorage.getItem('targemLeaderboard');
-            if (savedPlayers) {
-                savedPlayers = JSON.parse(savedPlayers);
-                // Обновляем lastSeen для активных игроков
-                savedPlayers.forEach(p => {
-                    if (Date.now() - p.lastSeen < 300000) { // 5 минут
-                        p.lastSeen = Date.now();
-                    }
-                });
-                // Сохраняем обратно
-                localStorage.setItem('targemLeaderboard', JSON.stringify(savedPlayers));
-                return savedPlayers;
-            }
-            
-            localStorage.setItem('targemLeaderboard', JSON.stringify(defaultPlayers));
-            return defaultPlayers;
-        }
+        // Глобальная таблица лидеров (симуляция реальных игроков)
+        const globalPlayers = [
+            { name: 'ProGamer', score: 50000000, level: 5000 },
+            { name: 'ClickMaster', score: 25000000, level: 2500 },
+            { name: 'TargemFan', score: 10000000, level: 1000 },
+            { name: 'MapExplorer', score: 5000000, level: 500 },
+            { name: 'ResourceKing', score: 1000000, level: 100 },
+            { name: 'CoinFlipPro', score: 500000, level: 50 },
+            { name: 'TerritoryLord', score: 250000, level: 25 },
+            { name: 'BaseBuilder', score: 100000, level: 10 },
+            { name: 'NewPlayer', score: 50000, level: 5 },
+            { name: 'Beginner', score: 10000, level: 1 }
+        ];
 
         let game = {
             score: 0,
@@ -1302,7 +1282,6 @@
                 game.startTime = Date.now() - (game.playTime * 1000);
             }
             
-            // Загрузка никнейма
             const savedNickname = localStorage.getItem('targemNickname');
             if (savedNickname) {
                 playerNickname = savedNickname;
@@ -1346,37 +1325,6 @@
             game.playTime = Math.floor((Date.now() - game.startTime) / 1000);
             game.cheatsEnabled = cheatsEnabled;
             localStorage.setItem('targemMapSave', JSON.stringify(game));
-            
-            // Сохраняем игрока в таблицу лидеров
-            savePlayerToLeaderboard();
-        }
-
-        function savePlayerToLeaderboard() {
-            let players = getLeaderboardData();
-            const playerData = {
-                name: playerNickname,
-                score: Math.floor(game.score),
-                level: Math.floor(game.totalClicks / 500) + 1,
-                lastSeen: Date.now()
-            };
-            
-            // Проверяем есть ли уже игрок с таким ником
-            const existingIndex = players.findIndex(p => p.name === playerNickname);
-            if (existingIndex >= 0) {
-                // Обновляем существующего
-                players[existingIndex] = playerData;
-            } else {
-                // Добавляем нового
-                players.push(playerData);
-            }
-            
-            // Сортируем по счету
-            players.sort((a, b) => b.score - a.score);
-            
-            // Оставляем топ 100
-            players = players.slice(0, 100);
-            
-            localStorage.setItem('targemLeaderboard', JSON.stringify(players));
         }
 
         function updateUI() {
@@ -1512,7 +1460,6 @@
             }
         }
 
-        // ОРЁЛ ИЛИ РЕШКА
         function playCoinFlip(choice) {
             const betInput = document.getElementById('bet-coin');
             const bet = parseInt(betInput.value);
@@ -1575,23 +1522,30 @@
             document.getElementById('arena-total').innerText = game.arenaTotal;
         }
 
-        // ТАБЛИЦА ЛИДЕРОВ
         function updateLeaderboard() {
             const tbody = document.getElementById('leaderboard-body');
-            const players = getLeaderboardData();
             
-            // Находим позицию игрока
-            const playerIndex = players.findIndex(p => p.name === playerNickname);
-            const playerScore = Math.floor(game.score);
-            const playerLevel = Math.floor(game.totalClicks / 500) + 1;
+            // Объединяем глобальных игроков с локальным
+            let allPlayers = [...globalPlayers];
+            
+            // Добавляем текущего игрока если его нет
+            const playerData = {
+                name: playerNickname,
+                score: Math.floor(game.score),
+                level: Math.floor(game.totalClicks / 500) + 1
+            };
+            
+            // Сортируем всех игроков
+            allPlayers.push(playerData);
+            allPlayers.sort((a, b) => b.score - a.score);
             
             let html = '';
             
             // Показываем топ 10
-            players.slice(0, 10).forEach((player, index) => {
+            allPlayers.slice(0, 10).forEach((player, index) => {
                 const rank = index + 1;
                 const rankBadge = rank <= 3 ? ['🥇','🥈','🥉'][rank-1] + ' ' + rank : rank;
-                const isCurrentPlayer = player.name === playerNickname;
+                const isCurrentPlayer = player.name === playerNickname && player.score === playerData.score;
                 
                 html += `<tr style="${isCurrentPlayer ? 'background: rgba(255,102,0,0.3);' : ''}">
                     <td><span class="rank-badge">${rankBadge}</span></td>
@@ -1602,16 +1556,14 @@
             });
             
             // Если игрок не в топ 10, показываем его позицию
-            if (playerIndex >= 10 || playerIndex === -1) {
-                const actualRank = players.findIndex(p => p.name === playerNickname && p.score === playerScore);
-                if (actualRank >= 10) {
-                    html += `<tr style="background: rgba(255,102,0,0.3);">
-                        <td><span class="rank-badge">${actualRank + 1}</span></td>
-                        <td>${playerNickname} (Вы)</td>
-                        <td>${playerScore.toLocaleString()}</td>
-                        <td>${playerLevel}</td>
-                    </tr>`;
-                }
+            const playerRank = allPlayers.findIndex(p => p.name === playerNickname && p.score === playerData.score);
+            if (playerRank >= 10) {
+                html += `<tr style="background: rgba(255,102,0,0.3);">
+                    <td><span class="rank-badge">${playerRank + 1}</span></td>
+                    <td>${playerNickname} (Вы)</td>
+                    <td>${playerData.score.toLocaleString()}</td>
+                    <td>${playerData.level}</td>
+                </tr>`;
             }
             
             tbody.innerHTML = html;
@@ -1724,7 +1676,6 @@
             if (tab === 'leaderboard') updateLeaderboard();
         }
 
-        // ЧИТ МЕНЮ ФУНКЦИИ
         function openCheatMenu() {
             const title = document.getElementById('game-title');
             title.classList.add('cheat-active');
@@ -1776,7 +1727,6 @@
             }
         }
 
-        // НАСТРОЙКИ
         function toggleSettings() {
             document.getElementById('settings-menu').classList.toggle('show');
         }
@@ -1846,16 +1796,22 @@
             });
         }
 
-        // СБРОС ПРОГРЕССА
+        // ПОЛНЫЙ СБРОС ПРОГРЕССА
         function confirmReset() {
-            if (confirm('⚠️ ВЫ УВЕРЕНЫ?\n\nВесь прогресс будет УДАЛЁН:\n• Ресурсы\n• Улучшения\n• Достижения\n• Локации\n\nЭто действие НЕОБРАТИМО!')) {
-                if (confirm('⚠️ ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ!\n\nВы действительно хотите сбросить весь прогресс?')) {
+            if (confirm('⚠️ ВЫ УВЕРЕНЫ?\n\nБудет удалено:\n• Баланс и ресурсы\n• Все улучшения\n• Все достижения\n• Все локации\n• Ваш никнейм\n• Читы\n• ВСЁ!\n\nЭто НЕОБРАТИМО!')) {
+                if (confirm('⚠️ ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ!\n\nВы действительно хотите удалить ВСЁ?')) {
+                    // Очищаем ВСЕ localStorage
                     localStorage.removeItem('targemMapSave');
                     localStorage.removeItem('targemNickname');
                     localStorage.removeItem('targemMapTheme');
                     localStorage.removeItem('targemMapEffects');
-                    showNotification('🗑️ Прогресс сброшен!');
-                    setTimeout(() => location.reload(), 1500);
+                    
+                    showNotification('🗑️ Прогресс полностью сброшен!');
+                    
+                    // Перезагружаем страницу через 1.5 секунды
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
                 }
             }
         }
