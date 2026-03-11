@@ -321,6 +321,7 @@
             background: #2a2a2a; color: #555; cursor: not-allowed;
         }
         
+        /* АРЕНА - ОРЁЛ ИЛИ РЕШКА */
         .casino-container { max-width: 500px; margin: 0 auto; }
         
         .casino-game {
@@ -336,6 +337,17 @@
             font-size: 20px; font-weight: bold;
             color: var(--primary-color, #ff8800); margin-bottom: 20px;
             text-transform: uppercase;
+        }
+        
+        .coin-display {
+            font-size: 80px;
+            margin: 20px 0;
+            animation: coinSpin 0.5s ease infinite;
+        }
+        
+        @keyframes coinSpin {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
         }
         
         .bet-input {
@@ -362,8 +374,8 @@
         }
         
         .casino-btn:active { transform: scale(0.95); }
-        .btn-red { background: linear-gradient(135deg, #ff4444, #cc0000); color: white; }
-        .btn-black { background: linear-gradient(135deg, #333, #1a1a1a); color: white; border: 1px solid #555; }
+        .btn-eagle { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
+        .btn-tails { background: linear-gradient(135deg, #c0c0c0, #888888); color: #000; }
         
         .casino-stats {
             display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
@@ -383,6 +395,60 @@
         .casino-result.win { color: #4cd964; }
         .casino-result.lose { color: #ff4444; }
         
+        /* ТАБЛИЦА ЛИДЕРОВ */
+        .leaderboard-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(0,0,0,0.4));
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .leaderboard-table th {
+            background: rgba(255,102,0,0.3);
+            color: var(--primary-color, #ff8800);
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        
+        .leaderboard-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,102,0,0.1);
+        }
+        
+        .leaderboard-table tr:hover {
+            background: rgba(255,102,0,0.15);
+        }
+        
+        .leaderboard-table tr:first-child td {
+            background: rgba(255,215,0,0.2);
+            color: #ffd700;
+        }
+        
+        .leaderboard-table tr:nth-child(2) td {
+            background: rgba(192,192,192,0.2);
+            color: #c0c0c0;
+        }
+        
+        .leaderboard-table tr:nth-child(3) td {
+            background: rgba(205,127,50,0.2);
+            color: #cd7f32;
+        }
+        
+        .rank-badge {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        /* КАРТА */
         .map-grid {
             display: grid; grid-template-columns: repeat(5, 1fr);
             gap: 10px; padding: 15px;
@@ -416,6 +482,7 @@
         
         .map-item:hover .tooltip { opacity: 1; }
         
+        /* УВЕДОМЛЕНИЯ */
         .notification {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
             background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
@@ -444,6 +511,7 @@
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
         
+        /* ДОСТИЖЕНИЯ */
         .achievement-category {
             background: rgba(255,102,0,0.05);
             border-radius: 5px;
@@ -599,11 +667,87 @@
             transform: scale(1.05);
         }
         
+        .cheat-warning {
+            font-size: 11px;
+            color: #ff4444;
+            text-align: center;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* НАСТРОЙКИ (ПРАВЫЙ ВЕРХНИЙ УГОЛ) */
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300));
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 1500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 20px rgba(255,102,0,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .settings-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 5px 30px rgba(255,102,0,0.7);
+        }
+        
+        .settings-menu {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #0a0a0f);
+            border: 2px solid var(--primary-color, #ff6600);
+            border-radius: 10px;
+            padding: 20px;
+            width: 320px;
+            z-index: 1499;
+            box-shadow: 0 10px 50px rgba(255,102,0,0.5);
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .settings-menu.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .settings-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--primary-color, #ff6600);
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .settings-section {
+            margin-bottom: 20px;
+        }
+        
+        .settings-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
         .color-picker {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 8px;
-            margin-top: 10px;
         }
         
         .color-option {
@@ -615,7 +759,7 @@
         }
         
         .color-option:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
         
         .color-option.selected {
@@ -623,13 +767,72 @@
             box-shadow: 0 0 15px rgba(255,255,255,0.5);
         }
         
-        .cheat-warning {
-            font-size: 11px;
-            color: #ff4444;
-            text-align: center;
-            margin-top: 15px;
+        .toggle-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .toggle-label {
+            font-size: 13px;
+            color: white;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #333;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: var(--primary-color, #ff6600);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+        
+        .cheat-indicator {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            z-index: 1499;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s;
+        }
+        
+        .cheat-indicator.show {
+            opacity: 1;
+            transform: scale(1);
         }
     </style>
 </head>
@@ -645,6 +848,55 @@
         <div class="combo-box" id="combo-box">🔥 COMBO x1</div>
     </div>
     
+    <!-- КНОПКА НАСТРОЕК -->
+    <button class="settings-btn" id="settings-btn" onclick="toggleSettings()">⚙️</button>
+    
+    <!-- МЕНЮ НАСТРОЕК -->
+    <div class="settings-menu" id="settings-menu">
+        <div class="settings-title">⚙️ Настройки</div>
+        
+        <div class="settings-section">
+            <div class="settings-label">🎨 Цвет темы</div>
+            <div class="color-picker" id="color-picker">
+                <div class="color-option selected" style="background: linear-gradient(135deg, #ff6600, #cc3300);" data-primary="#ff6600" data-secondary="#cc3300" data-accent="#ffaa00"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #4cd964, #34c759);" data-primary="#4cd964" data-secondary="#34c759" data-accent="#7fff00"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #00d4ff, #0099ff);" data-primary="#00d4ff" data-secondary="#0099ff" data-accent="#00ffff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ff00ff, #cc00cc);" data-primary="#ff00ff" data-secondary="#cc00cc" data-accent="#ff66ff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ffff00, #ffcc00);" data-primary="#ffff00" data-secondary="#ffcc00" data-accent="#ffffff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ff4444, #cc0000);" data-primary="#ff4444" data-secondary="#cc0000" data-accent="#ff6666"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #a55eea, #8854d0);" data-primary="#a55eea" data-secondary="#8854d0" data-accent="#d980fa"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ffffff, #cccccc);" data-primary="#ffffff" data-secondary="#cccccc" data-accent="#eeeeee"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #00ff88, #00cc66);" data-primary="#00ff88" data-secondary="#00cc66" data-accent="#00ffaa"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ff8800, #ff6600);" data-primary="#ff8800" data-secondary="#ff6600" data-accent="#ffaa00"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #0066ff, #0044cc);" data-primary="#0066ff" data-secondary="#0044cc" data-accent="#0088ff"></div>
+                <div class="color-option" style="background: linear-gradient(135deg, #ff0066, #cc0044);" data-primary="#ff0066" data-secondary="#cc0044" data-accent="#ff3388"></div>
+            </div>
+        </div>
+        
+        <div class="settings-section">
+            <div class="settings-label">🎬 Эффекты</div>
+            <div class="toggle-option" onclick="toggleEffect('particles')">
+                <span class="toggle-label">✨ Частицы</span>
+                <div class="toggle-switch active" id="toggle-particles"></div>
+            </div>
+            <div class="toggle-option" onclick="toggleEffect('win')">
+                <span class="toggle-label">🎉 Эффект выигрыша</span>
+                <div class="toggle-switch active" id="toggle-win"></div>
+            </div>
+            <div class="toggle-option" onclick="toggleEffect('combo')">
+                <span class="toggle-label">🔥 Индикатор комбо</span>
+                <div class="toggle-switch active" id="toggle-combo"></div>
+            </div>
+            <div class="toggle-option" onclick="toggleEffect('bg')">
+                <span class="toggle-label">🌈 Анимация фона</span>
+                <div class="toggle-switch active" id="toggle-bg"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ИНДИКАТОР ЧИТОВ -->
+    <div class="cheat-indicator" id="cheat-indicator">⚠️ ЧИТЫ АКТИВНЫ</div>
+    
     <!-- ЧИТ МЕНЮ -->
     <div class="cheat-menu-overlay" id="cheat-overlay" onclick="closeCheatMenu()"></div>
     <div class="cheat-menu" id="cheat-menu">
@@ -658,20 +910,6 @@
         <div class="cheat-section">
             <div class="cheat-label">⚡ Сила клика</div>
             <input type="number" id="cheat-power" class="cheat-input" placeholder="1" value="1">
-        </div>
-        
-        <div class="cheat-section">
-            <div class="cheat-label">🎨 Цвет темы</div>
-            <div class="color-picker">
-                <div class="color-option selected" style="background: linear-gradient(135deg, #ff6600, #cc3300);" data-primary="#ff6600" data-secondary="#cc3300" data-accent="#ffaa00"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #4cd964, #34c759);" data-primary="#4cd964" data-secondary="#34c759" data-accent="#7fff00"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #00d4ff, #0099ff);" data-primary="#00d4ff" data-secondary="#0099ff" data-accent="#00ffff"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #ff00ff, #cc00cc);" data-primary="#ff00ff" data-secondary="#cc00cc" data-accent="#ff66ff"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #ffff00, #ffcc00);" data-primary="#ffff00" data-secondary="#ffcc00" data-accent="#ffffff"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #ff4444, #cc0000);" data-primary="#ff4444" data-secondary="#cc0000" data-accent="#ff6666"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #a55eea, #8854d0);" data-primary="#a55eea" data-secondary="#8854d0" data-accent="#d980fa"></div>
-                <div class="color-option" style="background: linear-gradient(135deg, #ffffff, #cccccc);" data-primary="#ffffff" data-secondary="#cccccc" data-accent="#eeeeee"></div>
-            </div>
         </div>
         
         <div class="cheat-buttons">
@@ -718,7 +956,8 @@
         <div class="right-panel">
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchTab('shop')">⚡ Улучшения</button>
-                <button class="tab-btn" onclick="switchTab('casino')">⚔️ Арена</button>
+                <button class="tab-btn" onclick="switchTab('arena')">⚔️ Арена</button>
+                <button class="tab-btn" onclick="switchTab('leaderboard')">📊 Топ</button>
                 <button class="tab-btn" onclick="switchTab('map')">🗺️ Карта</button>
                 <button class="tab-btn" onclick="switchTab('achievements')">🏆 Достижения</button>
             </div>
@@ -769,35 +1008,97 @@
                 </div>
             </div>
 
-            <div class="tab-content" id="tab-casino">
+            <div class="tab-content" id="tab-arena">
                 <div class="shop">
-                    <div class="shop-title">⚔️ Арена</div>
+                    <div class="shop-title">⚔️ Арена - Орёл или Решка</div>
                     
                     <div class="casino-container">
                         <div class="casino-game">
-                            <div class="casino-title">🔴 Красные / ⚫ Чёрные</div>
-                            <input type="number" id="bet-rb" class="bet-input" placeholder="Ставка" value="10" min="1">
+                            <div class="casino-title">🪙 Подбрось монету</div>
+                            <div class="coin-display" id="coin-display">🪙</div>
+                            <input type="number" id="bet-coin" class="bet-input" placeholder="Ставка" value="10" min="1">
                             <div class="casino-buttons">
-                                <button class="casino-btn btn-red" onclick="playRedBlack('red')">🔴 Красные (x2)</button>
-                                <button class="casino-btn btn-black" onclick="playRedBlack('black')">⚫ Чёрные (x2)</button>
+                                <button class="casino-btn btn-eagle" onclick="playCoinFlip('eagle')">🦅 Орёл (x2)</button>
+                                <button class="casino-btn btn-tails" onclick="playCoinFlip('tails')">🪙 Решка (x2)</button>
                             </div>
-                            <div class="casino-result" id="result-rb"></div>
+                            <div class="casino-result" id="result-coin"></div>
                             
                             <div class="casino-stats">
                                 <div class="casino-stat">
-                                    <div class="casino-stat-value" id="casino-wins">0</div>
+                                    <div class="casino-stat-value" id="arena-wins">0</div>
                                     <div class="casino-stat-label">Победы</div>
                                 </div>
                                 <div class="casino-stat">
-                                    <div class="casino-stat-value" id="casino-losses">0</div>
+                                    <div class="casino-stat-value" id="arena-losses">0</div>
                                     <div class="casino-stat-label">Поражения</div>
                                 </div>
                                 <div class="casino-stat">
-                                    <div class="casino-stat-value" id="casino-total">0</div>
-                                    <div class="casino-stat-label">Боёв</div>
+                                    <div class="casino-stat-value" id="arena-total">0</div>
+                                    <div class="casino-stat-label">Игр</div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-leaderboard">
+                <div class="shop">
+                    <div class="shop-title">📊 Таблица Лидеров</div>
+                    
+                    <div class="leaderboard-container">
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Игрок</th>
+                                    <th>Ресурсы</th>
+                                    <th>Уровень</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-body">
+                                <tr>
+                                    <td><span class="rank-badge">🥇 1</span></td>
+                                    <td>ProGamer</td>
+                                    <td>50,000,000</td>
+                                    <td>5000</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge">🥈 2</span></td>
+                                    <td>ClickMaster</td>
+                                    <td>25,000,000</td>
+                                    <td>2500</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge">🥉 3</span></td>
+                                    <td>TargemFan</td>
+                                    <td>10,000,000</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge">4</span></td>
+                                    <td>MapExplorer</td>
+                                    <td>5,000,000</td>
+                                    <td>500</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge">5</span></td>
+                                    <td>ResourceKing</td>
+                                    <td>1,000,000</td>
+                                    <td>100</td>
+                                </tr>
+                                <tr id="player-rank" style="background: rgba(255,102,0,0.3);">
+                                    <td><span class="rank-badge" id="player-rank-num">-</span></td>
+                                    <td>Вы</td>
+                                    <td id="player-rank-score">0</td>
+                                    <td id="player-rank-level">1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="text-align: center; color: #666; font-size: 11px; margin-top: 15px; text-transform: uppercase;">
+                        ⚠️ Таблица обновляется каждые 10 секунд
                     </div>
                 </div>
             </div>
@@ -832,7 +1133,7 @@
                     
                     <div class="achievement-category">
                         <div class="category-title">⚔️ Арена</div>
-                        <div class="map-grid" id="achievements-casino"></div>
+                        <div class="map-grid" id="achievements-arena"></div>
                     </div>
                     
                     <div class="achievement-category">
@@ -861,6 +1162,12 @@
         };
 
         let cheatsEnabled = false;
+        let effectsEnabled = {
+            particles: true,
+            win: true,
+            combo: true,
+            bg: true
+        };
 
         const locations = [
             { clicks: 0, emoji: '🗺️', name: 'Неизведанно' },
@@ -891,23 +1198,37 @@
             { id: 'score_50000', name: 'Магнат', desc: '50000 ресурсов', emoji: '🏦', category: 'score', hidden: false, condition: (g) => g.score >= 50000 },
             { id: 'score_100000', name: 'Император', desc: '100000 ресурсов', emoji: '👑', category: 'score', hidden: false, condition: (g) => g.score >= 100000 },
             
-            { id: 'casino_first', name: 'Первый бой', desc: '1 бой на арене', emoji: '⚔️', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 1 },
-            { id: 'casino_10', name: 'Боец', desc: '10 боёв', emoji: '🥊', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 10 },
-            { id: 'casino_50', name: 'Ветеран', desc: '50 боёв', emoji: '🎖️', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 50 },
-            { id: 'casino_100', name: 'Чемпион', desc: '100 боёв', emoji: '🏆', category: 'casino', hidden: false, condition: (g) => g.casinoTotal >= 100 },
-            { id: 'casino_wins_10', name: 'Серия', desc: '10 побед', emoji: '🔥', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 10 },
-            { id: 'casino_wins_50', name: 'Доминатор', desc: '50 побед', emoji: '💪', category: 'casino', hidden: false, condition: (g) => g.casinoWins >= 50 },
-            { id: 'casino_bigwin', name: 'Джекпот', desc: '5000+ за раз', emoji: '💸', category: 'casino', hidden: false, condition: (g) => g.casinoBigWin >= 1 },
-            { id: 'casino_streak_5', name: 'Комбо', desc: '5 побед подряд', emoji: '⚡', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 5 },
-            { id: 'casino_streak_10', name: 'Бог арены', desc: '10 побед подряд', emoji: '👑', category: 'casino', hidden: false, condition: (g) => g.casinoStreak >= 10 },
+            { id: 'arena_first', name: 'Первая игра', desc: '1 игра на арене', emoji: '🪙', category: 'arena', hidden: false, condition: (g) => g.arenaTotal >= 1 },
+            { id: 'arena_10', name: 'Игрок', desc: '10 игр', emoji: '🎲', category: 'arena', hidden: false, condition: (g) => g.arenaTotal >= 10 },
+            { id: 'arena_50', name: 'Азартный', desc: '50 игр', emoji: '🃏', category: 'arena', hidden: false, condition: (g) => g.arenaTotal >= 50 },
+            { id: 'arena_100', name: 'Гambler', desc: '100 игр', emoji: '♠️', category: 'arena', hidden: false, condition: (g) => g.arenaTotal >= 100 },
+            { id: 'arena_wins_10', name: 'Везунчик', desc: '10 побед', emoji: '🍀', category: 'arena', hidden: false, condition: (g) => g.arenaWins >= 10 },
+            { id: 'arena_wins_50', name: 'Фортуна', desc: '50 побед', emoji: '🎯', category: 'arena', hidden: false, condition: (g) => g.arenaWins >= 50 },
+            { id: 'arena_bigwin', name: 'Крупный выигрыш', desc: '5000+ за раз', emoji: '💸', category: 'arena', hidden: false, condition: (g) => g.arenaBigWin >= 1 },
+            { id: 'arena_streak_5', name: 'Серия удачи', desc: '5 побед подряд', emoji: '🔥', category: 'arena', hidden: false, condition: (g) => g.arenaStreak >= 5 },
+            { id: 'arena_streak_10', name: 'Непобедимый', desc: '10 побед подряд', emoji: '👑', category: 'arena', hidden: false, condition: (g) => g.arenaStreak >= 10 },
             
-            { id: 'hidden_bankrupt', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Банкрот', realDesc: 'Проиграть всё', condition: (g) => g.casinoBankrupt >= 1 },
+            { id: 'hidden_bankrupt', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Банкрот', realDesc: 'Проиграть всё', condition: (g) => g.arenaBankrupt >= 1 },
             { id: 'hidden_rich', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Миллионер', realDesc: '1,000,000 ресурсов', condition: (g) => g.score >= 1000000 },
             { id: 'hidden_clicker', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Клик-машина', realDesc: '100,000 кликов', condition: (g) => g.totalClicks >= 100000 },
             { id: 'hidden_patient', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Терпеливый', realDesc: 'Играть 1 час', condition: (g) => g.playTime >= 3600 },
-            { id: 'hidden_lucky', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Везунчик', realDesc: '10 побед подряд', condition: (g) => g.casinoStreak >= 10 },
+            { id: 'hidden_lucky', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Везунчик', realDesc: '10 побед подряд', condition: (g) => g.arenaStreak >= 10 },
             { id: 'hidden_collector', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Картограф', realDesc: 'Все локации', condition: (g) => g.unlockedLocations.length >= locations.length },
             { id: 'hidden_perfect', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Идеальный', realDesc: 'Все достижения', condition: (g) => g.achievements.length >= achievements.filter(a => !a.hidden).length }
+        ];
+
+        // Фейковые игроки для таблицы лидеров
+        const fakePlayers = [
+            { name: 'ProGamer', score: 50000000, level: 5000 },
+            { name: 'ClickMaster', score: 25000000, level: 2500 },
+            { name: 'TargemFan', score: 10000000, level: 1000 },
+            { name: 'MapExplorer', score: 5000000, level: 500 },
+            { name: 'ResourceKing', score: 1000000, level: 100 },
+            { name: 'CoinFlipPro', score: 500000, level: 50 },
+            { name: 'TerritoryLord', score: 250000, level: 25 },
+            { name: 'BaseBuilder', score: 100000, level: 10 },
+            { name: 'NewPlayer', score: 50000, level: 5 },
+            { name: 'Beginner', score: 10000, level: 1 }
         ];
 
         let game = {
@@ -923,13 +1244,13 @@
             combo: 0,
             comboTimer: 0,
             lastClickTime: 0,
-            casinoWins: 0,
-            casinoLosses: 0,
-            casinoTotal: 0,
-            casinoStreak: 0,
-            casinoMaxStreak: 0,
-            casinoBigWin: 0,
-            casinoBankrupt: 0,
+            arenaWins: 0,
+            arenaLosses: 0,
+            arenaTotal: 0,
+            arenaStreak: 0,
+            arenaMaxStreak: 0,
+            arenaBigWin: 0,
+            arenaBankrupt: 0,
             isTelegram: true,
             openCount: 0,
             dailyStreak: 0,
@@ -953,6 +1274,12 @@
                 applyTheme(currentTheme);
             }
             
+            const savedEffects = localStorage.getItem('targemMapEffects');
+            if (savedEffects) {
+                effectsEnabled = JSON.parse(savedEffects);
+                updateEffectToggles();
+            }
+            
             const today = new Date().toDateString();
             if (game.lastPlayDate !== today) {
                 if (game.lastPlayDate === new Date(Date.now() - 86400000).toDateString()) {
@@ -965,11 +1292,13 @@
             
             game.openCount++;
             cheatsEnabled = game.cheatsEnabled;
+            updateCheatIndicator();
             updateLocation(true);
             renderMap();
             renderAchievements();
-            updateCasinoStats();
+            updateArenaStats();
             updateUI();
+            updateLeaderboard();
         }
 
         function saveGame() {
@@ -997,6 +1326,7 @@
             updateProgressBar();
             updateCombo();
             updateAchievementsProgress();
+            updateLeaderboard();
             saveGame();
         }
 
@@ -1013,7 +1343,7 @@
             if (!game.unlockedLocations.includes(newLoc)) {
                 game.unlockedLocations.push(newLoc);
                 showNotification(`🎉 Открыто: ${locations[newLoc].name}!`);
-                createParticles(locations[newLoc].emoji, 15);
+                if (effectsEnabled.particles) createParticles(locations[newLoc].emoji, 15);
             }
             
             const display = game.unlockedLocations.includes(game.selectedLocation) ? game.selectedLocation : game.currentLocation;
@@ -1054,7 +1384,7 @@
             game.score += income;
             game.totalClicks++;
             
-            createClickEffect(e, income);
+            if (effectsEnabled.particles) createClickEffect(e, income);
             document.getElementById('clicker-btn').style.transform = 'scale(0.92)';
             setTimeout(() => document.getElementById('clicker-btn').style.transform = 'scale(1)', 80);
             
@@ -1075,7 +1405,7 @@
 
         function updateCombo() {
             const box = document.getElementById('combo-box');
-            if (game.combo >= 2) {
+            if (game.combo >= 2 && effectsEnabled.combo) {
                 box.innerText = `🔥 COMBO x${game.combo >= 25 ? '5' : game.combo >= 10 ? '2' : '1'}`;
                 box.classList.add('show');
             } else {
@@ -1110,10 +1440,12 @@
             }
         }
 
-        function playRedBlack(choice) {
-            const betInput = document.getElementById('bet-rb');
+        // ОРЁЛ ИЛИ РЕШКА
+        function playCoinFlip(choice) {
+            const betInput = document.getElementById('bet-coin');
             const bet = parseInt(betInput.value);
-            const resultDiv = document.getElementById('result-rb');
+            const resultDiv = document.getElementById('result-coin');
+            const coinDisplay = document.getElementById('coin-display');
             
             if (isNaN(bet) || bet <= 0) {
                 resultDiv.innerText = '❌ Неверная ставка';
@@ -1127,40 +1459,75 @@
             }
             
             game.score -= bet;
-            game.casinoTotal++;
+            game.arenaTotal++;
             
-            const win = Math.random() < 0.5;
+            // Анимация монеты
+            coinDisplay.style.animation = 'coinSpin 0.2s ease infinite';
             
-            if (win) {
-                const winAmount = bet * 2;
-                game.score += winAmount;
-                game.casinoWins++;
-                game.casinoStreak++;
-                if (game.casinoStreak > game.casinoMaxStreak) game.casinoMaxStreak = game.casinoStreak;
-                if (winAmount >= 5000) game.casinoBigWin++;
+            setTimeout(() => {
+                const result = Math.random() < 0.5 ? 'eagle' : 'tails';
+                coinDisplay.style.animation = 'none';
+                coinDisplay.innerText = result === 'eagle' ? '🦅' : '🪙';
                 
-                resultDiv.innerText = `✅ ПОБЕДА! +${winAmount}`;
-                resultDiv.className = 'casino-result win';
-                createParticles('💰', 10);
-            } else {
-                game.casinoLosses++;
-                game.casinoStreak = 0;
+                const win = choice === result;
                 
-                resultDiv.innerText = '❌ ПОРАЖЕНИЕ';
-                resultDiv.className = 'casino-result lose';
+                if (win) {
+                    const winAmount = bet * 2;
+                    game.score += winAmount;
+                    game.arenaWins++;
+                    game.arenaStreak++;
+                    if (game.arenaStreak > game.arenaMaxStreak) game.arenaMaxStreak = game.arenaStreak;
+                    if (winAmount >= 5000) game.arenaBigWin++;
+                    
+                    resultDiv.innerText = `✅ ПОБЕДА! Выпал ${result === 'eagle' ? 'Орёл' : 'Решка'}! +${winAmount}`;
+                    resultDiv.className = 'casino-result win';
+                    if (effectsEnabled.win) createParticles('💰', 10);
+                } else {
+                    game.arenaLosses++;
+                    game.arenaStreak = 0;
+                    
+                    resultDiv.innerText = `❌ ПОРАЖЕНИЕ! Выпал ${result === 'eagle' ? 'Орёл' : 'Решка'}`;
+                    resultDiv.className = 'casino-result lose';
+                    
+                    if (game.score <= 0) game.arenaBankrupt++;
+                }
                 
-                if (game.score <= 0) game.casinoBankrupt++;
-            }
-            
-            updateCasinoStats();
-            if (!cheatsEnabled) checkAchievements();
-            updateUI();
+                updateArenaStats();
+                if (!cheatsEnabled) checkAchievements();
+                updateUI();
+            }, 1000);
         }
 
-        function updateCasinoStats() {
-            document.getElementById('casino-wins').innerText = game.casinoWins;
-            document.getElementById('casino-losses').innerText = game.casinoLosses;
-            document.getElementById('casino-total').innerText = game.casinoTotal;
+        function updateArenaStats() {
+            document.getElementById('arena-wins').innerText = game.arenaWins;
+            document.getElementById('arena-losses').innerText = game.arenaLosses;
+            document.getElementById('arena-total').innerText = game.arenaTotal;
+        }
+
+        // ТАБЛИЦА ЛИДЕРОВ
+        function updateLeaderboard() {
+            const tbody = document.getElementById('leaderboard-body');
+            const playerRank = document.getElementById('player-rank');
+            
+            // Сортировка игроков
+            const allPlayers = [...fakePlayers, { name: 'Вы', score: Math.floor(game.score), level: Math.floor(game.totalClicks / 500) + 1 }];
+            allPlayers.sort((a, b) => b.score - a.score);
+            
+            // Находим позицию игрока
+            const playerIndex = allPlayers.findIndex(p => p.name === 'Вы');
+            const playerRankNum = playerIndex + 1;
+            
+            // Обновляем строку игрока
+            document.getElementById('player-rank-num').innerText = playerRankNum <= 3 ? ['🥇','🥈','🥉'][playerRankNum-1] + ' ' + playerRankNum : playerRankNum;
+            document.getElementById('player-rank-score').innerText = Math.floor(game.score).toLocaleString();
+            document.getElementById('player-rank-level').innerText = Math.floor(game.totalClicks / 500) + 1;
+            
+            // Перемещаем строку игрока на правильную позицию
+            if (playerIndex < 5) {
+                playerRank.style.display = 'none';
+            } else {
+                playerRank.style.display = 'table-row';
+            }
         }
 
         function checkAchievements() {
@@ -1174,7 +1541,7 @@
                         showNotification(`🏆 ${ach.name}!`);
                     }
                     
-                    createParticles(ach.emoji, 10);
+                    if (effectsEnabled.particles) createParticles(ach.emoji, 10);
                     if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 }
             });
@@ -1200,7 +1567,7 @@
         }
 
         function renderAchievements() {
-            const categories = ['clicks', 'score', 'casino', 'hidden'];
+            const categories = ['clicks', 'score', 'arena', 'hidden'];
             
             categories.forEach(cat => {
                 const grid = document.getElementById(`achievements-${cat}`);
@@ -1239,6 +1606,8 @@
         }
 
         function createParticles(emoji, count) {
+            if (!effectsEnabled.particles) return;
+            
             const container = document.getElementById('particles');
             for (let i = 0; i < count; i++) {
                 const p = document.createElement('div');
@@ -1265,6 +1634,7 @@
             document.getElementById(`tab-${tab}`).classList.add('active');
             if (tab === 'map') renderMap();
             if (tab === 'achievements') renderAchievements();
+            if (tab === 'leaderboard') updateLeaderboard();
         }
 
         // ЧИТ МЕНЮ ФУНКЦИИ
@@ -1301,12 +1671,27 @@
             
             cheatsEnabled = true;
             game.cheatsEnabled = true;
+            updateCheatIndicator();
             
             showNotification('⚠️ Читы активированы!');
-            createParticles('🔧', 20);
+            if (effectsEnabled.particles) createParticles('🔧', 20);
             
             closeCheatMenu();
             updateUI();
+        }
+
+        function updateCheatIndicator() {
+            const indicator = document.getElementById('cheat-indicator');
+            if (cheatsEnabled) {
+                indicator.classList.add('show');
+            } else {
+                indicator.classList.remove('show');
+            }
+        }
+
+        // НАСТРОЙКИ
+        function toggleSettings() {
+            document.getElementById('settings-menu').classList.toggle('show');
         }
 
         function applyTheme(theme) {
@@ -1331,6 +1716,35 @@
             });
         });
 
+        function toggleEffect(effect) {
+            effectsEnabled[effect] = !effectsEnabled[effect];
+            document.getElementById(`toggle-${effect}`).classList.toggle('active');
+            localStorage.setItem('targemMapEffects', JSON.stringify(effectsEnabled));
+            
+            // Применяем эффекты
+            if (effect === 'bg') {
+                const orbs = document.querySelectorAll('.bg-orb');
+                orbs.forEach(orb => {
+                    orb.style.animation = effectsEnabled.bg ? 'orbFloat 10s ease-in-out infinite' : 'none';
+                });
+            }
+            
+            showNotification(`${effect}: ${effectsEnabled[effect] ? 'ВКЛ' : 'ВЫКЛ'}`);
+        }
+
+        function updateEffectToggles() {
+            Object.keys(effectsEnabled).forEach(effect => {
+                const toggle = document.getElementById(`toggle-${effect}`);
+                if (toggle) {
+                    if (effectsEnabled[effect]) {
+                        toggle.classList.add('active');
+                    } else {
+                        toggle.classList.remove('active');
+                    }
+                }
+            });
+        }
+
         setInterval(() => {
             if (game.autoClicker > 0) {
                 game.score += game.autoClicker;
@@ -1342,6 +1756,10 @@
             if (game.comboTimer > 0) game.comboTimer--;
             else game.combo = 0;
         }, 100);
+
+        setInterval(() => {
+            updateLeaderboard();
+        }, 10000);
 
         setInterval(saveGame, 5000);
 
