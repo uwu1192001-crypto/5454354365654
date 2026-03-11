@@ -709,7 +709,7 @@
             border: 2px solid var(--primary-color, #ff6600);
             border-radius: 10px;
             padding: 20px;
-            width: 320px;
+            width: 350px;
             z-index: 1499;
             box-shadow: 0 10px 50px rgba(255,102,0,0.5);
             opacity: 0;
@@ -812,6 +812,42 @@
             transform: translateX(24px);
         }
         
+        .nickname-input {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,102,0,0.3);
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .nickname-input:focus {
+            outline: none;
+            border-color: var(--primary-color, #ff6600);
+        }
+        
+        .reset-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .reset-btn:hover {
+            box-shadow: 0 0 20px rgba(255,68,68,0.5);
+            transform: scale(1.02);
+        }
+        
         .cheat-indicator {
             position: fixed;
             top: 80px;
@@ -856,6 +892,12 @@
         <div class="settings-title">⚙️ Настройки</div>
         
         <div class="settings-section">
+            <div class="settings-label">👤 Ваш никнейм</div>
+            <input type="text" id="nickname-input" class="nickname-input" placeholder="Введите никнейм" maxlength="15">
+            <button class="reset-btn" style="background: linear-gradient(135deg, var(--primary-color, #ff6600), var(--secondary-color, #cc3300)); margin-top: 8px;" onclick="saveNickname()">💾 Сохранить</button>
+        </div>
+        
+        <div class="settings-section">
             <div class="settings-label">🎨 Цвет темы</div>
             <div class="color-picker" id="color-picker">
                 <div class="color-option selected" style="background: linear-gradient(135deg, #ff6600, #cc3300);" data-primary="#ff6600" data-secondary="#cc3300" data-accent="#ffaa00"></div>
@@ -891,6 +933,11 @@
                 <span class="toggle-label">🌈 Анимация фона</span>
                 <div class="toggle-switch active" id="toggle-bg"></div>
             </div>
+        </div>
+        
+        <div class="settings-section">
+            <div class="settings-label">⚠️ Опасная зона</div>
+            <button class="reset-btn" onclick="confirmReset()">🗑️ Сбросить прогресс</button>
         </div>
     </div>
     
@@ -1057,48 +1104,13 @@
                                 </tr>
                             </thead>
                             <tbody id="leaderboard-body">
-                                <tr>
-                                    <td><span class="rank-badge">🥇 1</span></td>
-                                    <td>ProGamer</td>
-                                    <td>50,000,000</td>
-                                    <td>5000</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="rank-badge">🥈 2</span></td>
-                                    <td>ClickMaster</td>
-                                    <td>25,000,000</td>
-                                    <td>2500</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="rank-badge">🥉 3</span></td>
-                                    <td>TargemFan</td>
-                                    <td>10,000,000</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="rank-badge">4</span></td>
-                                    <td>MapExplorer</td>
-                                    <td>5,000,000</td>
-                                    <td>500</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="rank-badge">5</span></td>
-                                    <td>ResourceKing</td>
-                                    <td>1,000,000</td>
-                                    <td>100</td>
-                                </tr>
-                                <tr id="player-rank" style="background: rgba(255,102,0,0.3);">
-                                    <td><span class="rank-badge" id="player-rank-num">-</span></td>
-                                    <td>Вы</td>
-                                    <td id="player-rank-score">0</td>
-                                    <td id="player-rank-level">1</td>
-                                </tr>
+                                <!-- Заполняется JavaScript -->
                             </tbody>
                         </table>
                     </div>
                     
                     <div style="text-align: center; color: #666; font-size: 11px; margin-top: 15px; text-transform: uppercase;">
-                        ⚠️ Таблица обновляется каждые 10 секунд
+                        🌐 Онлайн игроки • Обновляется каждые 5 секунд
                     </div>
                 </div>
             </div>
@@ -1169,6 +1181,8 @@
             bg: true
         };
 
+        let playerNickname = 'Игрок';
+
         const locations = [
             { clicks: 0, emoji: '🗺️', name: 'Неизведанно' },
             { clicks: 100, emoji: '🏠', name: 'Деревня' },
@@ -1217,19 +1231,39 @@
             { id: 'hidden_perfect', name: '???', desc: '???', emoji: '🔒', category: 'hidden', hidden: true, realName: 'Идеальный', realDesc: 'Все достижения', condition: (g) => g.achievements.length >= achievements.filter(a => !a.hidden).length }
         ];
 
-        // Фейковые игроки для таблицы лидеров
-        const fakePlayers = [
-            { name: 'ProGamer', score: 50000000, level: 5000 },
-            { name: 'ClickMaster', score: 25000000, level: 2500 },
-            { name: 'TargemFan', score: 10000000, level: 1000 },
-            { name: 'MapExplorer', score: 5000000, level: 500 },
-            { name: 'ResourceKing', score: 1000000, level: 100 },
-            { name: 'CoinFlipPro', score: 500000, level: 50 },
-            { name: 'TerritoryLord', score: 250000, level: 25 },
-            { name: 'BaseBuilder', score: 100000, level: 10 },
-            { name: 'NewPlayer', score: 50000, level: 5 },
-            { name: 'Beginner', score: 10000, level: 1 }
-        ];
+        // Реальные игроки из localStorage (симуляция онлайн игроков)
+        function getLeaderboardData() {
+            const defaultPlayers = [
+                { name: 'ProGamer', score: 50000000, level: 5000, lastSeen: Date.now() },
+                { name: 'ClickMaster', score: 25000000, level: 2500, lastSeen: Date.now() },
+                { name: 'TargemFan', score: 10000000, level: 1000, lastSeen: Date.now() },
+                { name: 'MapExplorer', score: 5000000, level: 500, lastSeen: Date.now() },
+                { name: 'ResourceKing', score: 1000000, level: 100, lastSeen: Date.now() },
+                { name: 'CoinFlipPro', score: 500000, level: 50, lastSeen: Date.now() },
+                { name: 'TerritoryLord', score: 250000, level: 25, lastSeen: Date.now() },
+                { name: 'BaseBuilder', score: 100000, level: 10, lastSeen: Date.now() },
+                { name: 'NewPlayer', score: 50000, level: 5, lastSeen: Date.now() },
+                { name: 'Beginner', score: 10000, level: 1, lastSeen: Date.now() }
+            ];
+            
+            // Получаем сохранённых игроков
+            let savedPlayers = localStorage.getItem('targemLeaderboard');
+            if (savedPlayers) {
+                savedPlayers = JSON.parse(savedPlayers);
+                // Обновляем lastSeen для активных игроков
+                savedPlayers.forEach(p => {
+                    if (Date.now() - p.lastSeen < 300000) { // 5 минут
+                        p.lastSeen = Date.now();
+                    }
+                });
+                // Сохраняем обратно
+                localStorage.setItem('targemLeaderboard', JSON.stringify(savedPlayers));
+                return savedPlayers;
+            }
+            
+            localStorage.setItem('targemLeaderboard', JSON.stringify(defaultPlayers));
+            return defaultPlayers;
+        }
 
         let game = {
             score: 0,
@@ -1266,6 +1300,13 @@
                 const data = JSON.parse(saved);
                 game = { ...game, ...data };
                 game.startTime = Date.now() - (game.playTime * 1000);
+            }
+            
+            // Загрузка никнейма
+            const savedNickname = localStorage.getItem('targemNickname');
+            if (savedNickname) {
+                playerNickname = savedNickname;
+                document.getElementById('nickname-input').value = playerNickname;
             }
             
             const savedTheme = localStorage.getItem('targemMapTheme');
@@ -1305,6 +1346,37 @@
             game.playTime = Math.floor((Date.now() - game.startTime) / 1000);
             game.cheatsEnabled = cheatsEnabled;
             localStorage.setItem('targemMapSave', JSON.stringify(game));
+            
+            // Сохраняем игрока в таблицу лидеров
+            savePlayerToLeaderboard();
+        }
+
+        function savePlayerToLeaderboard() {
+            let players = getLeaderboardData();
+            const playerData = {
+                name: playerNickname,
+                score: Math.floor(game.score),
+                level: Math.floor(game.totalClicks / 500) + 1,
+                lastSeen: Date.now()
+            };
+            
+            // Проверяем есть ли уже игрок с таким ником
+            const existingIndex = players.findIndex(p => p.name === playerNickname);
+            if (existingIndex >= 0) {
+                // Обновляем существующего
+                players[existingIndex] = playerData;
+            } else {
+                // Добавляем нового
+                players.push(playerData);
+            }
+            
+            // Сортируем по счету
+            players.sort((a, b) => b.score - a.score);
+            
+            // Оставляем топ 100
+            players = players.slice(0, 100);
+            
+            localStorage.setItem('targemLeaderboard', JSON.stringify(players));
         }
 
         function updateUI() {
@@ -1461,7 +1533,6 @@
             game.score -= bet;
             game.arenaTotal++;
             
-            // Анимация монеты
             coinDisplay.style.animation = 'coinSpin 0.2s ease infinite';
             
             setTimeout(() => {
@@ -1507,27 +1578,43 @@
         // ТАБЛИЦА ЛИДЕРОВ
         function updateLeaderboard() {
             const tbody = document.getElementById('leaderboard-body');
-            const playerRank = document.getElementById('player-rank');
-            
-            // Сортировка игроков
-            const allPlayers = [...fakePlayers, { name: 'Вы', score: Math.floor(game.score), level: Math.floor(game.totalClicks / 500) + 1 }];
-            allPlayers.sort((a, b) => b.score - a.score);
+            const players = getLeaderboardData();
             
             // Находим позицию игрока
-            const playerIndex = allPlayers.findIndex(p => p.name === 'Вы');
-            const playerRankNum = playerIndex + 1;
+            const playerIndex = players.findIndex(p => p.name === playerNickname);
+            const playerScore = Math.floor(game.score);
+            const playerLevel = Math.floor(game.totalClicks / 500) + 1;
             
-            // Обновляем строку игрока
-            document.getElementById('player-rank-num').innerText = playerRankNum <= 3 ? ['🥇','🥈','🥉'][playerRankNum-1] + ' ' + playerRankNum : playerRankNum;
-            document.getElementById('player-rank-score').innerText = Math.floor(game.score).toLocaleString();
-            document.getElementById('player-rank-level').innerText = Math.floor(game.totalClicks / 500) + 1;
+            let html = '';
             
-            // Перемещаем строку игрока на правильную позицию
-            if (playerIndex < 5) {
-                playerRank.style.display = 'none';
-            } else {
-                playerRank.style.display = 'table-row';
+            // Показываем топ 10
+            players.slice(0, 10).forEach((player, index) => {
+                const rank = index + 1;
+                const rankBadge = rank <= 3 ? ['🥇','🥈','🥉'][rank-1] + ' ' + rank : rank;
+                const isCurrentPlayer = player.name === playerNickname;
+                
+                html += `<tr style="${isCurrentPlayer ? 'background: rgba(255,102,0,0.3);' : ''}">
+                    <td><span class="rank-badge">${rankBadge}</span></td>
+                    <td>${player.name}${isCurrentPlayer ? ' (Вы)' : ''}</td>
+                    <td>${player.score.toLocaleString()}</td>
+                    <td>${player.level}</td>
+                </tr>`;
+            });
+            
+            // Если игрок не в топ 10, показываем его позицию
+            if (playerIndex >= 10 || playerIndex === -1) {
+                const actualRank = players.findIndex(p => p.name === playerNickname && p.score === playerScore);
+                if (actualRank >= 10) {
+                    html += `<tr style="background: rgba(255,102,0,0.3);">
+                        <td><span class="rank-badge">${actualRank + 1}</span></td>
+                        <td>${playerNickname} (Вы)</td>
+                        <td>${playerScore.toLocaleString()}</td>
+                        <td>${playerLevel}</td>
+                    </tr>`;
+                }
             }
+            
+            tbody.innerHTML = html;
         }
 
         function checkAchievements() {
@@ -1694,6 +1781,21 @@
             document.getElementById('settings-menu').classList.toggle('show');
         }
 
+        function saveNickname() {
+            const input = document.getElementById('nickname-input');
+            const nickname = input.value.trim();
+            
+            if (nickname.length < 3) {
+                showNotification('⚠️ Никнейм должен быть от 3 символов!');
+                return;
+            }
+            
+            playerNickname = nickname;
+            localStorage.setItem('targemNickname', playerNickname);
+            showNotification('✅ Никнейм сохранён!');
+            updateLeaderboard();
+        }
+
         function applyTheme(theme) {
             currentTheme = theme;
             document.documentElement.style.setProperty('--primary-color', theme.primary);
@@ -1721,7 +1823,6 @@
             document.getElementById(`toggle-${effect}`).classList.toggle('active');
             localStorage.setItem('targemMapEffects', JSON.stringify(effectsEnabled));
             
-            // Применяем эффекты
             if (effect === 'bg') {
                 const orbs = document.querySelectorAll('.bg-orb');
                 orbs.forEach(orb => {
@@ -1745,6 +1846,20 @@
             });
         }
 
+        // СБРОС ПРОГРЕССА
+        function confirmReset() {
+            if (confirm('⚠️ ВЫ УВЕРЕНЫ?\n\nВесь прогресс будет УДАЛЁН:\n• Ресурсы\n• Улучшения\n• Достижения\n• Локации\n\nЭто действие НЕОБРАТИМО!')) {
+                if (confirm('⚠️ ПОСЛЕДНЕЕ ПРЕДУПРЕЖДЕНИЕ!\n\nВы действительно хотите сбросить весь прогресс?')) {
+                    localStorage.removeItem('targemMapSave');
+                    localStorage.removeItem('targemNickname');
+                    localStorage.removeItem('targemMapTheme');
+                    localStorage.removeItem('targemMapEffects');
+                    showNotification('🗑️ Прогресс сброшен!');
+                    setTimeout(() => location.reload(), 1500);
+                }
+            }
+        }
+
         setInterval(() => {
             if (game.autoClicker > 0) {
                 game.score += game.autoClicker;
@@ -1759,7 +1874,7 @@
 
         setInterval(() => {
             updateLeaderboard();
-        }, 10000);
+        }, 5000);
 
         setInterval(saveGame, 5000);
 
